@@ -19,4 +19,4 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 
 ## Tareas
 
-- [x] chupar pene de matias
+
