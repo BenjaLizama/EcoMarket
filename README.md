@@ -22,9 +22,9 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 ### Productos e Inventario
 
 - [x] Crear Model
-- [ ] Crear Repository
-- [ ] Crear Controller
-- [ ] Crear Services
+- [x] Crear Repository
+- [x] Crear Controller
+- [x] Crear Services
 - [ ] Se deben poder obtener a todos los productos del sistema.
 - [ ] Se deben poder agregar, actualizar y eliminar productos del inventario.
 - [ ] Se deben poder actualizar los stocks de los productos segun se requiera.
