@@ -1,5 +1,5 @@
 
-## Configuracion del proyecto
+# Configuracion del proyecto
 ### 🐭 Version: Java 24
 ### 🐷 Puerto: 9090
 
