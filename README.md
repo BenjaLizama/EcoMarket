@@ -1,7 +1,7 @@
 
 ## Configuracion del proyecto
-### Version: Java 24
-### Puerto: 9090
+### 🐭 Version: Java 24
+### 🐷 Puerto: 9090
 
 # Importante
 
