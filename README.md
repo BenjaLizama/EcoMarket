@@ -28,6 +28,9 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 
 ### Carrito y Pedidos
 
+- [ ] Tarea
 
 ### Autenticacion de Usuario
+
+- [ ] Tarea
 
