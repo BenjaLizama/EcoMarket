@@ -25,3 +25,9 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 - [ ] Se deben poder agregar, actualizar y eliminar productos del inventario.
 - [ ] Se deben poder actualizar los stocks de los productos segun se requiera.
 - [ ] El sistema podra autorizar los pedidos de los productos si estos se encuentran disponibles y generar reportes de productos con poco stock (< 3).
+
+### Carrito y Pedidos
+
+
+### Autenticacion de Usuario
+
