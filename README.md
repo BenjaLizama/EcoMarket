@@ -23,8 +23,8 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 ### Productos e Inventario
 
 >Para cada una de las entidades que realicen operaciones CRUD.
-- [ ] Crear Model.
-- [ ] Crear Repository.
+- [x] Crear Model.
+- [x] Crear Repository.
 - [ ] Crear Controller.
 - [ ] Crear Services.
 - [ ] Se deben poder obtener a todos los productos del sistema.
