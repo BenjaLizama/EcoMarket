@@ -21,7 +21,7 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 
 ### Productos e Inventario
 
-  >(Para cada una de las entidades que realicen operaciones CRUD).
+>Para cada una de las entidades que realicen operaciones CRUD.
 - [ ] Crear Model.
 - [ ] Crear Repository.
 - [ ] Crear Controller.
@@ -33,7 +33,7 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 
 ### Carrito y Pedidos
 
-  >(Para cada una de las entidades que realicen operaciones CRUD).
+>Para cada una de las entidades que realicen operaciones CRUD.
 - [ ] Crear Model.
 - [ ] Crear Repository.
 - [ ] Crear Controller.
@@ -41,7 +41,7 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 
 ### Autenticacion de Usuario
 
-  >(Para cada una de las entidades que realicen operaciones CRUD).
+>Para cada una de las entidades que realicen operaciones CRUD.
 - [ ] Crear Model.
 - [ ] Crear Repository.
 - [ ] Crear Controller.
