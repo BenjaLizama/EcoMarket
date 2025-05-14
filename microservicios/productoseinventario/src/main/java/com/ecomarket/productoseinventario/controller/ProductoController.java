@@ -4,16 +4,15 @@ package com.ecomarket.productoseinventario.controller;
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
 import com.ecomarket.productoseinventario.services.ProductoService;
-import com.ecomarket.productoseinventario.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/productos")
@@ -55,6 +54,27 @@ public class ProductoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
     }
+
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
+
+        // Validar si existe el producto.
+        if (!productoService.existById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Obtener el producto actual y settear sus valores.
+        Producto productoActual = productoService.findById(id);
+        productoActual.setNombre(producto.getNombre());
+        productoActual.setDescripcion(producto.getDescripcion());
+        productoActual.setPrecio(producto.getPrecio());
+
+        // Guardar el producto actualizado y retornar
+        Producto productoActualizado = productoService.save(productoActual);
+        return ResponseEntity.ok(productoActualizado);
+    }
+
+
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
