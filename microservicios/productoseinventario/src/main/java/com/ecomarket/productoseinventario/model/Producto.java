@@ -27,12 +27,12 @@ public class Producto {
     private Integer precio;
 
     // Implementar conexiones (Categoria, Stock)
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "stock")
+    /*@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "producto", referencedColumnName = "id")
     private Stock stock;
 
     @ManyToOne
     @JoinTable(name = "categoria")
     private Categoria categoria;
-
+    */
 }

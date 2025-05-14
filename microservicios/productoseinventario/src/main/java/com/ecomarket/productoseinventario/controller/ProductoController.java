@@ -50,7 +50,7 @@ public class ProductoController {
         nuevoStock.setCantidad(0);
         nuevoStock.setFecha_actualizacion(LocalDateTime.now()); // Agrega la fecha actual.
 
-        producto.setStock(nuevoStock); // Se conecta el stock con el nuevo producto.
+        //producto.setStock(nuevoStock); // Se conecta el stock con el nuevo producto.
         productoService.save(producto); // Guarda el nuevo producto en la base de datos.
 
         return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
