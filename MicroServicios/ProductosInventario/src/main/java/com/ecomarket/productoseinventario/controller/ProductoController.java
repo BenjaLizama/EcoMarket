@@ -1,7 +1,6 @@
 package com.ecomarket.productoseinventario.controller;
 
 
-import com.ecomarket.productoseinventario.model.Categoria;
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
 import com.ecomarket.productoseinventario.services.ProductoService;
@@ -30,7 +29,7 @@ public class ProductoController {
         return ResponseEntity.ok(productos);
     }
 
-    @PostMapping
+    @PostMapping("/agregar")
     public void agregarProducto(String nombre, String descripcion, Integer precio) {
         Producto producto = new Producto();
         Stock stock = new Stock();
@@ -38,12 +37,6 @@ public class ProductoController {
         producto.setDescripcion(descripcion);
         producto.setPrecio(precio);
         producto.setStock(stock);
-    }
-
-    @PostMapping
-    public void agregarCategoria(String nombre) {
-        Categoria categoria = new Categoria();
-        categoria.setNombre(nombre);
     }
 
 }
