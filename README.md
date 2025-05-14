@@ -21,11 +21,12 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 
 ### Productos e Inventario
 
-- [x] Crear Model.
-- [x] Crear Repository (Para cada una de las entidades que realicen operaciones CRUD).
-- [x] Crear Controller.
-- [x] Crear Services.
-- [x] Se deben poder obtener a todos los productos del sistema.
+####(Para cada una de las entidades que realicen operaciones CRUD).
+- [ ] Crear Model.
+- [ ] Crear Repository.
+- [ ] Crear Controller.
+- [ ] Crear Services.
+- [ ] Se deben poder obtener a todos los productos del sistema.
 - [ ] Se deben poder agregar, actualizar y eliminar productos del inventario.
 - [ ] Se deben poder actualizar los stocks de los productos segun se requiera.
 - [ ] El sistema podra autorizar los pedidos de los productos si estos se encuentran disponibles y generar reportes de productos con poco stock (< 3).
