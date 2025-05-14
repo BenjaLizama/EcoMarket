@@ -9,11 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ecomarket</groupId>
-	<artifactId>productoseinventario</artifactId>
+	<artifactId>autenticacionusuario</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>productoseinventario</name>
-	<description>Microservicio de productos e inventario</description>
+	<name>autenticacionusuario</name>
+	<description>la autenticacion de usuario po loco</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -21,10 +20,7 @@
 	<developers>
 		<developer/>
 	</developers>
-    <modules>
-        <module>MicroServicios/AutenticacionUsuarios</module>
-    </modules>
-    <scm>
+	<scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
