@@ -45,18 +45,15 @@ public class ProductoController {
 
     // Agrega productos
     @PostMapping("/agregar") // Solicitud Post
-    public void agregarProducto(String nombre, String descripcion, Integer precio) { // Recibe parámetros nombre, descripción y precio.
-        Producto producto = new Producto(); // Crea el nuevo producto.
-        producto.setNombre(nombre); // Setea todos los atributos correspondientes al producto.
-        producto.setDescripcion(descripcion);
-        producto.setPrecio(precio);
-
+    public ResponseEntity<Producto> agregarProducto(@RequestBody Producto producto) {
         Stock nuevoStock = new Stock();
         nuevoStock.setCantidad(0);
         nuevoStock.setFecha_actualizacion(LocalDateTime.now()); // Agrega la fecha actual.
 
         producto.setStock(nuevoStock); // Se conecta el stock con el nuevo producto.
         productoService.save(producto); // Guarda el nuevo producto en la base de datos.
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
     }
 
     @DeleteMapping("/eliminar/{id}")
