@@ -28,8 +28,8 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 - [ ] Crear Services.
 - [ ] Se deben poder obtener a todos los productos del sistema.
 - [ ] Se deben poder agregar, actualizar y eliminar productos del inventario.
-- [ ] Se deben poder actualizar los stocks de los productos segun se requiera.
-- [ ] El sistema podra autorizar los pedidos de los productos si estos se encuentran disponibles y generar reportes de productos con poco stock (< 3).
+- [ ] Se deben poder actualizar los stocks de los productos según se requiera.
+- [ ] El sistema podrá autorizar los pedidos de los productos si estos se encuentran disponibles y generar reportes de productos con poco stock (< 3).
 
 ### Carrito y Pedidos
 
@@ -39,7 +39,7 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 - [ ] Crear Controller.
 - [ ] Crear Services.
 
-### Autenticacion de Usuario
+### Autenticación de Usuario
 
 >Para cada una de las entidades que realicen operaciones CRUD.
 - [ ] Crear Model.
