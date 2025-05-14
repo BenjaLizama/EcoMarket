@@ -24,6 +24,8 @@ public class ProductoService {
         return productoRepository.findById(id).get();
     }
 
+    public boolean existById(Long id) { return productoRepository.existsById(id); }
+
     public Producto save(Producto producto) {
         return productoRepository.save(producto);
     }

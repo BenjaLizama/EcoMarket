@@ -27,7 +27,7 @@ public class Producto {
     private Integer precio;
 
     // Implementar conexiones (Categoria, Stock)
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "stock")
     private Stock stock;
 

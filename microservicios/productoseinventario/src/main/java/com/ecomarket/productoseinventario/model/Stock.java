@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -23,6 +25,6 @@ public class Stock {
     private Integer cantidad;
 
     @Column(nullable = false)
-    private Date fecha_actualizacion;
+    private LocalDateTime fecha_actualizacion;
 
 }
