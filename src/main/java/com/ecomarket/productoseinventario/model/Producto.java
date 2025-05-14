@@ -35,5 +35,4 @@ public class Producto {
     @JoinTable(name = "categoria")
     private Categoria categoria;
 
-
 }
