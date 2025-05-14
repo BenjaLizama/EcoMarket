@@ -30,7 +30,7 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 - [x] Se deben poder obtener a todos los productos del sistema.
 - [x] Se deben poder agregar productos.
 - [ ] Se deben poder actualizar productos.
-- [ ] Se deben poder eliminar productos.
+- [x] Se deben poder eliminar productos.
 - [ ] Se deben poder actualizar los stocks de los productos según se requiera.
 - [ ] El sistema podrá autorizar los pedidos de los productos si estos se encuentran disponibles y generar reportes de productos con poco stock (< 3). 🗳️ En revision
 
