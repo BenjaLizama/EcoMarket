@@ -3,7 +3,9 @@ package com.ecomarket.productoseinventario.controller;
 
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
+import com.ecomarket.productoseinventario.repository.StockRepository;
 import com.ecomarket.productoseinventario.services.ProductoService;
+import com.ecomarket.productoseinventario.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
+
+    @Autowired
+    private StockService stockService;
 
 
     @GetMapping // Solicitud Get
@@ -49,8 +54,12 @@ public class ProductoController {
         nuevoStock.setCantidad(0);
         nuevoStock.setFecha_actualizacion(LocalDateTime.now()); // Agrega la fecha actual.
 
+        stockService.save(nuevoStock);
+
         //producto.setStock(nuevoStock); // Se conecta el stock con el nuevo producto.
         productoService.save(producto); // Guarda el nuevo producto en la base de datos.
+
+        productoService.findById(Long.valueOf(producto.getId())).setStock(stockService.getReferenceById(nuevoStock.getId()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
     }

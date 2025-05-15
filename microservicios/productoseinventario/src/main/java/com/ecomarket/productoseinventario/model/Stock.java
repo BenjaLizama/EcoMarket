@@ -19,12 +19,16 @@ public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private Integer cantidad;
 
     @Column(nullable = false)
     private LocalDateTime fecha_actualizacion;
+
+    public Long getId() {
+        return id;
+    }
 
 }

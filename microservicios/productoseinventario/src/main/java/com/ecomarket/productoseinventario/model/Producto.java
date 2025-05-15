@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
@@ -27,12 +28,14 @@ public class Producto {
     private Integer precio;
 
     // Implementar conexiones (Categoria, Stock)
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "producto", referencedColumnName = "id")
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "stock")
     private Stock stock;
 
     @ManyToOne
     @JoinTable(name = "categoria")
     private Categoria categoria;
-    */
+
+
 }
