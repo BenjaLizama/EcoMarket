@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>productoseinventario</module>
+        <module>carro</module>
+        <module>autenticacionusuario</module>
     </modules>
 
     <properties>

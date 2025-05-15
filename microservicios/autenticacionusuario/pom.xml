@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ecomarket</groupId>
-	<artifactId>autenticacionusuario</artifactId>
+	<artifactId>productoseinventario</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>autenticacionusuario</name>
-	<description>la autenticacion de usuario po loco</description>
+	<name>productoseinventario</name>
+	<description>Microservicio Productos e Inventario</description>
 	<url/>
 	<licenses>
 		<license/>
