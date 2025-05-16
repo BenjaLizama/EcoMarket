@@ -3,10 +3,9 @@ package com.ecomarket.productoseinventario.controller;
 import com.ecomarket.productoseinventario.model.Categoria;
 import com.ecomarket.productoseinventario.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +25,17 @@ public class CategoriaController {
             return ResponseEntity.noContent().build(); // Retorna 204 (No Content).
         }
         return ResponseEntity.ok(categorias); // Si encuentra elementos retorna 200 (OK).
+    }
+
+
+    // Agregar categorias.
+    @PostMapping("/agregar")
+    public ResponseEntity<Categoria> agregarCategoria(@RequestBody Categoria categoria) {
+        Categoria categoriaNueva = new Categoria(); // Se instancia una nueva categoria.
+        categoriaNueva.setNombre(categoria.getNombre()); // Se settea el nombre de la categoria a categoriaNueva.
+
+        categoriaService.save(categoriaNueva); // Se almacena la nueva categoria en la base de datos.
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaNueva); // Se retorna la respuesta http 200 (Ok).
     }
 
 }
