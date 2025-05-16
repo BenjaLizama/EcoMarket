@@ -64,7 +64,7 @@ public class CategoriaController {
 
         // Se elimina la categoria de la base de datos.
         categoriaService.delete(id);
-        // Se retorna la respuesta del servidor 204 (No Content).
+        // Se retorna la respuesta del servidor 204 (No Content)
         return ResponseEntity.noContent().build();
     }
 
