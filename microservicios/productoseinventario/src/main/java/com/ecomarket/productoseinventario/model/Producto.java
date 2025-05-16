@@ -1,6 +1,7 @@
 package com.ecomarket.productoseinventario.model;
 
 import com.ecomarket.productoseinventario.repository.StockRepository;
+import com.ecomarket.productoseinventario.services.CategoriaService;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,10 +36,9 @@ public class Producto {
     @JsonManagedReference
     private Stock stock;
 
-    /*
+
     @ManyToOne
-    @JoinTable(name = "categoria")
+    @JoinColumn(name = "categoria")
     private Categoria categoria;
-     */
 
 }

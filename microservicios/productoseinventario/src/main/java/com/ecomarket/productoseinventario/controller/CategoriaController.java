@@ -13,11 +13,12 @@ import java.util.List;
 @RequestMapping("/api/v1/categorias")
 public class CategoriaController {
 
+
     @Autowired
     private CategoriaService categoriaService;
 
 
-    // Obtener todas las categorias existentes
+    // Obtener todas las categorias existentes.
     @GetMapping
     public ResponseEntity<List<Categoria>> obtenerCategorias() {
         List<Categoria> categorias = categoriaService.findAll();
@@ -28,7 +29,7 @@ public class CategoriaController {
     }
 
 
-    // Agregar categorias.
+    // Agregar categoria.
     @PostMapping("/agregar")
     public ResponseEntity<Categoria> agregarCategoria(@RequestBody Categoria categoria) {
         Categoria categoriaNueva = new Categoria(); // Se instancia una nueva categoria.
@@ -37,5 +38,22 @@ public class CategoriaController {
         categoriaService.save(categoriaNueva); // Se almacena la nueva categoria en la base de datos.
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaNueva); // Se retorna la respuesta http 200 (Ok).
     }
+
+    // Modificar categoria.
+    @PutMapping("/modificar/{id}/{nombre}")
+    public ResponseEntity<Categoria> modificarCategoria(@PathVariable Long id, @PathVariable String nombre) {
+        if (!categoriaService.existById(id)) {
+            return ResponseEntity.notFound().build(); // Si no existe retorna 404 (Not Found)
+        }
+
+        Categoria categoria = categoriaService.findById(id).get(); // Se obtiene la categoria por su id.
+        categoria.setNombre(nombre); // Se settea el nuevo nombre.
+
+        categoriaService.save(categoria);
+        return ResponseEntity.ok(categoria); // Retorna 200 (OK) y muestra la categoria.
+    }
+
+
+    // Eliminar categoria.
 
 }

@@ -1,6 +1,7 @@
 package com.ecomarket.productoseinventario.controller;
 
 
+import com.ecomarket.productoseinventario.model.Categoria;
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
 import com.ecomarket.productoseinventario.services.ProductoService;

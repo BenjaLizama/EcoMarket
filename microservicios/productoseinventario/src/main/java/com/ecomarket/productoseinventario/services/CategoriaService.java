@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -16,6 +17,10 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     public List<Categoria> findAll() { return categoriaRepository.findAll(); }
+
+    public Optional<Categoria> findById(Long id) { return categoriaRepository.findById(id); }
+
+    public Boolean existById(Long id) { return categoriaRepository.existsById(id); }
 
     public Categoria save(Categoria categoria) { return categoriaRepository.save(categoria); }
 
