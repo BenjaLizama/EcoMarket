@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @RestController
@@ -97,5 +98,28 @@ public class ProductoController {
         return ResponseEntity.noContent().build(); // 204 OK
     }
 
+
+    // Actualizar stock.
+    @PutMapping("/actualizar/{id}/stock/{cantidad}")
+    public ResponseEntity<Producto> actualizarStockProducto(@PathVariable Long id, @PathVariable Integer cantidad) {
+        if (!productoService.existById(id)) {
+            return ResponseEntity.notFound().build(); // Si no se encuentra el id retorna 404 (Not Found)
+        }
+
+        // Obtendremos el producto actual según su ID (tambien todos sus campos)
+        Producto productoActual = productoService.findById(id);
+        productoActual.setId(productoService.findById(id).getId());
+        productoActual.setNombre(productoService.findById(id).getNombre());
+        productoActual.setDescripcion(productoService.findById(id).getDescripcion());
+        productoActual.setPrecio(productoService.findById(id).getPrecio());
+
+        // Obtenemos el stock y actualizamos su cantidad.
+        productoActual.setStock(productoService.findById(id).getStock());
+        productoActual.getStock().setCantidad(cantidad);
+        productoActual.getStock().setFecha_actualizacion(LocalDateTime.now());
+
+        productoService.save(productoActual);
+        return ResponseEntity.ok(productoActual);
+    }
 
 }
