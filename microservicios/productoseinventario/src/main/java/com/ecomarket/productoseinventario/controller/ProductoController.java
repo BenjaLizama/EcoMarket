@@ -85,10 +85,17 @@ public class ProductoController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
         if (!productoService.existById(id)) {
-            return ResponseEntity.notFound().build(); // Retorna error 404 (Not Found).
+            return ResponseEntity.notFound().build(); // 404 si no existe
         }
-        productoService.delete(id); // Eliminamos el producto.
-        return ResponseEntity.noContent().build(); // Retorna 204 (No content) <= Significa que se eliminó el producto correctamente.
+
+        Producto producto = productoService.findById(id);
+        Long stockId = producto.getStock().getId();
+
+        productoService.delete(id);     // Elimina el producto
+        stockService.delete(stockId);   // Elimina el stock relacionado
+
+        return ResponseEntity.noContent().build(); // 204 OK
     }
+
 
 }

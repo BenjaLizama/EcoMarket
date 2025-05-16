@@ -30,7 +30,7 @@ public class Producto {
 
     // Implementar conexiones (Categoria, Stock)
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "stock_id")
     @JsonManagedReference
     private Stock stock;
