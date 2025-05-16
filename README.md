@@ -32,6 +32,10 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 - [x] Se deben poder actualizar productos.
 - [x] Se deben poder eliminar productos.
 - [x] Se deben poder actualizar los stocks de los productos según se requiera.
+- [ ] Se deben poder actualizar los nombres de las categorias.
+- [ ] Las categorias deben contener un listado de todos los productos los cuales pertenecen a estas.
+- [ ] Implementar eliminacion de categorias.
+- [ ] Se debe poder agregar, actualizar o eliminar la categoria de un producto.
 
 ### Carrito y Pedidos
 
