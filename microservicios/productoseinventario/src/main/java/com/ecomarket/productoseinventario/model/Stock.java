@@ -1,13 +1,12 @@
 package com.ecomarket.productoseinventario.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Entity
@@ -19,7 +18,7 @@ public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private Integer cantidad;
@@ -27,4 +26,7 @@ public class Stock {
     @Column(nullable = false)
     private LocalDateTime fecha_actualizacion;
 
+    @OneToOne(mappedBy = "stock")
+    @JsonBackReference
+    private Producto producto;
 }

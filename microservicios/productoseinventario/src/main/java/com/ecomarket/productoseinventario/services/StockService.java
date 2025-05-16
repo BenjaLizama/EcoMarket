@@ -1,6 +1,5 @@
 package com.ecomarket.productoseinventario.services;
 
-import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
 import com.ecomarket.productoseinventario.repository.StockRepository;
 import jakarta.transaction.Transactional;
@@ -19,7 +18,9 @@ public class StockService {
 
     public List<Stock> findAll() { return stockRepository.findAll(); }
 
-    public Optional<Stock> findById(Long id) { return stockRepository.findById(id); } // "Optional<Stock>" te da más control si el objeto no existe. }
+    public Optional<Stock> findById(Long id) { return stockRepository.findById(id); } // "Optional<Stock>" te da más control si el objeto no existe.
+
+    public Stock save(Stock stock) { return stockRepository.save(stock); }
 
     public void delete(Long id) { stockRepository.deleteById(id); }
     

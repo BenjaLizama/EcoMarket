@@ -4,28 +4,32 @@ package com.ecomarket.productoseinventario.controller;
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
 import com.ecomarket.productoseinventario.services.ProductoService;
+import com.ecomarket.productoseinventario.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
+import java.util.List;
 import java.time.LocalDateTime;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/v1/productos")
 public class ProductoController {
 
+
     @Autowired
     private ProductoService productoService;
+    @Autowired
+    private StockService stockService;
 
 
     @GetMapping // Solicitud Get
     public ResponseEntity<List<Producto>> listar() {
         List<Producto> productos = productoService.findAll();
-        if (productos.isEmpty()) { // Si la lista se encuentra vacía
+        if (productos.isEmpty()) { // Si la lista se encuentra vacía.
             return ResponseEntity.noContent().build(); // Retorna 204 (No Content)
         }
         return ResponseEntity.ok(productos); // Devuelve el listado de productos encontrados.
@@ -42,22 +46,24 @@ public class ProductoController {
     }
 
 
-    // Agrega productos
-    @PostMapping("/agregar") // Solicitud Post
+    // Agrega productos.
+    @PostMapping("/agregar") // Solicitud Post.
     public ResponseEntity<Producto> agregarProducto(@RequestBody Producto producto) {
         Stock nuevoStock = new Stock();
         nuevoStock.setCantidad(0);
         nuevoStock.setFecha_actualizacion(LocalDateTime.now()); // Agrega la fecha actual.
+        stockService.save(nuevoStock);
 
-        //producto.setStock(nuevoStock); // Se conecta el stock con el nuevo producto.
+        producto.setStock(nuevoStock);
+
         productoService.save(producto); // Guarda el nuevo producto en la base de datos.
-
         return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
     }
 
+
+    // Actualizar producto.
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
-
         // Validar si existe el producto.
         if (!productoService.existById(id)) {
             return ResponseEntity.notFound().build();
@@ -69,20 +75,20 @@ public class ProductoController {
         productoActual.setDescripcion(producto.getDescripcion());
         productoActual.setPrecio(producto.getPrecio());
 
-        // Guardar el producto actualizado y retornar
+        // Guardar el producto actualizado y retornar.
         Producto productoActualizado = productoService.save(productoActual);
         return ResponseEntity.ok(productoActualizado);
     }
 
 
-
+    // Eliminar producto.
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
         if (!productoService.existById(id)) {
             return ResponseEntity.notFound().build(); // Retorna error 404 (Not Found).
         }
         productoService.delete(id); // Eliminamos el producto.
-        return ResponseEntity.noContent().build(); // Retorna 204 (No content) <= Significa que se elimino el producto correctamente.
+        return ResponseEntity.noContent().build(); // Retorna 204 (No content) <= Significa que se eliminó el producto correctamente.
     }
 
 }
