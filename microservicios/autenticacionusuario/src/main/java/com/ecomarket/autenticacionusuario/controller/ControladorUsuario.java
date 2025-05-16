@@ -10,16 +10,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/usuarios")
+
 public class ControladorUsuario {
 
     @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping
-    public List<Usuario> listarusUarios() {
-        return usuarioService.findAll();
+
+    public ResponseEntity<List<Usuario>> listarusUarios() {
+    List<Usuario> usuarios = usuarioService.findAll();
+    if(usuarios.isEmpty()){
+        return ResponseEntity.noContent().build();
     }
+    return ResponseEntity.ok(usuarios);
+    }
+
     // BUSCAR USUARIO
     @GetMapping("{id}")
     public Usuario buscarUsuario(@PathVariable Long id) {
