@@ -39,9 +39,9 @@ public class CategoriaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaNueva); // Se retorna la respuesta http 200 (Ok).
     }
 
-    // Modificar categoria.
+    // Modificar nombre categoria.
     @PutMapping("/modificar/{id}/{nombre}")
-    public ResponseEntity<Categoria> modificarCategoria(@PathVariable Long id, @PathVariable String nombre) {
+    public ResponseEntity<Categoria> modificarNombreCategoria(@PathVariable Long id, @PathVariable String nombre) {
         if (!categoriaService.existById(id)) {
             return ResponseEntity.notFound().build(); // Si no existe retorna 404 (Not Found)
         }
