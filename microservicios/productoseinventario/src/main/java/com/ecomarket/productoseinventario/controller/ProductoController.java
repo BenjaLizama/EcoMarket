@@ -4,6 +4,7 @@ package com.ecomarket.productoseinventario.controller;
 import com.ecomarket.productoseinventario.model.Categoria;
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
+import com.ecomarket.productoseinventario.services.CategoriaService;
 import com.ecomarket.productoseinventario.services.ProductoService;
 import com.ecomarket.productoseinventario.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 
 @RestController
@@ -26,6 +26,8 @@ public class ProductoController {
     private ProductoService productoService;
     @Autowired
     private StockService stockService;
+    @Autowired
+    private CategoriaService categoriaService;
 
 
     @GetMapping // Solicitud Get
@@ -121,6 +123,33 @@ public class ProductoController {
 
         productoService.save(productoActual);
         return ResponseEntity.ok(productoActual);
+    }
+
+
+    // Actualizar categoria de un producto.
+    @PutMapping("/actualizar/{id}/categoria/{nombreCategoria}")
+    public ResponseEntity<Producto> actualizarCategoriaProducto(@PathVariable Long id, @PathVariable String nombreCategoria) {
+        if (!productoService.existById(id)) {
+            ResponseEntity.notFound().build();
+        }
+
+        // Obtener producto.
+        Producto producto = productoService.findById(id);
+
+        // Buscamos la categoria.
+        for (Categoria categoria : categoriaService.findAll()) {
+            if (nombreCategoria.toLowerCase().equals(categoria.getNombre().toLowerCase())) {
+                // Se settea la categoria al producto y luego se guarda en la base de datos.
+                producto.setCategoria(categoria);
+                productoService.save(producto);
+
+                // Retorna 200 (Ok) y muestra el producto actualizado.
+                return ResponseEntity.ok(producto);
+            }
+        }
+
+        // No se encontro la categoria; Retorna 404 (Not Found)
+        return ResponseEntity.notFound().build();
     }
 
 }
