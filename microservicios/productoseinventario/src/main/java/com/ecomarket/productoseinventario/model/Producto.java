@@ -39,6 +39,7 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "categoria")
+    @JsonManagedReference
     private Categoria categoria;
 
 }
