@@ -1,6 +1,7 @@
 package com.ecomarket.productoseinventario.controller;
 
 import com.ecomarket.productoseinventario.model.Categoria;
+import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,7 @@ public class CategoriaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaNueva); // Se retorna la respuesta http 200 (Ok).
     }
 
+
     // Modificar nombre categoria.
     @PutMapping("/modificar/{id}/{nombre}")
     public ResponseEntity<Categoria> modificarNombreCategoria(@PathVariable Long id, @PathVariable String nombre) {
@@ -68,4 +70,15 @@ public class CategoriaController {
         return ResponseEntity.noContent().build();
     }
 
+
+    // Obtener listado de productos de categoria.
+    @GetMapping("/productos/{id}")
+    public ResponseEntity<List<Producto>> obtenerListaProductos(@PathVariable Long id) {
+        if (!categoriaService.existById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Producto> listaProductos = categoriaService.findById(id).get().getProductoList();
+        return ResponseEntity.ok(listaProductos);
+    }
 }
