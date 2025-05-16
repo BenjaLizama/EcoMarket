@@ -48,8 +48,8 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 ### Autenticación de Usuario
 
 >Para cada una de las entidades que realicen operaciones CRUD.
-- [ ] Crear Model.
-- [ ] Crear Repository.
+- [x] Crear Model.
+- [x] Crear Repository.
 - [ ] Crear Controller.
-- [ ] Crear Services.
+- [x] Crear Services.
 
