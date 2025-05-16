@@ -55,5 +55,17 @@ public class CategoriaController {
 
 
     // Eliminar categoria.
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        // Si no existe la categoria retorna 404 (Not Found)
+        if (!categoriaService.existById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Se elimina la categoria de la base de datos.
+        categoriaService.delete(id);
+        // Se retorna la respuesta del servidor 204 (No Content).
+        return ResponseEntity.noContent().build();
+    }
 
 }
