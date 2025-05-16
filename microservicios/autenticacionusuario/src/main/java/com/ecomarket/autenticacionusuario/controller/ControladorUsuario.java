@@ -18,7 +18,6 @@ public class ControladorUsuario {
     private UsuarioService usuarioService;
 
     @GetMapping
-
     public ResponseEntity<List<Usuario>> listarusUarios() {
     List<Usuario> usuarios = usuarioService.findAll();
     if(usuarios.isEmpty()){
@@ -34,8 +33,8 @@ public class ControladorUsuario {
     }
     //AGREGAR USUARIO
     @PostMapping
-    public Usuario agregarUsuario(@RequestBody Usuario Usuario) {
-        return usuarioService.save(Usuario);
+    public Usuario agregarUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.save(usuario);
     }
     // BORRAR USUARIO
     @DeleteMapping("{id}")
