@@ -164,4 +164,16 @@ public class ProductoController {
         return ResponseEntity.ok(lista);
     }
 
+
+    // Buscar productos no disponibles
+    @GetMapping("/!disponibles")
+    public ResponseEntity<List<Producto>> productosNoDisponibles() {
+        List<Producto> lista = productoService.buscarProductosNoDisponibles();
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(lista);
+    }
+
 }
