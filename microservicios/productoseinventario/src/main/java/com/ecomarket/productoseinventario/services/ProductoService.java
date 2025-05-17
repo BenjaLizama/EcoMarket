@@ -32,6 +32,8 @@ public class ProductoService {
 
     public List<Producto> buscarProductoDisponibles() { return productoRepository.buscarProductosDisponibles(); }
 
+    public List<Producto> buscarProductosNoDisponibles() { return productoRepository.buscarProductosNoDisponibles(); }
+
     public void delete(Long id) {
         productoRepository.deleteById(id);
     }
