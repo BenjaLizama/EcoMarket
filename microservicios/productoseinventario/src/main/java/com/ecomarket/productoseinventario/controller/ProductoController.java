@@ -152,4 +152,16 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
+
+    // Buscar productos disponibles
+    @GetMapping("/disponibles")
+    public ResponseEntity<List<Producto>> productosDisponibles() {
+        List<Producto> lista = productoService.buscarProductoDisponibles();
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(lista);
+    }
+
 }
