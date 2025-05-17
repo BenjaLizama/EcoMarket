@@ -16,4 +16,7 @@ public class DetallePago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDetallePago;
 
+    @OneToOne(mappedBy = "detallePago")
+    private Usuario usuario;
+
 }
