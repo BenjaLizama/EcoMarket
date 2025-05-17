@@ -1,5 +1,6 @@
 package com.ecomarket.autenticacionusuario.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class DetallePago {
 
 
     @OneToOne(mappedBy = "detallePago")
+    @JsonBackReference
     private Usuario usuario;
 
 

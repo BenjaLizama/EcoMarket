@@ -1,5 +1,6 @@
 package com.ecomarket.autenticacionusuario.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class Tarjeta {
     private String datosDuenioTarjeta;
 
     @ManyToMany(mappedBy = "tarjetaList") // Le dice a JPA que esta relacion ya esta definida en la entidad DetallePago en su variable "tarjetaList".
+    @JsonIgnore
     private Set<DetallePago> detallePagoList; // Set evia automaticamente duplicados en memoria.
 
 }

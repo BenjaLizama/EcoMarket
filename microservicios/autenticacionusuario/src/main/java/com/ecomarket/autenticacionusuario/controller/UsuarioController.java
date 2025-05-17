@@ -1,9 +1,12 @@
 package com.ecomarket.autenticacionusuario.controller;
 
 
+import com.ecomarket.autenticacionusuario.model.DetallePago;
 import com.ecomarket.autenticacionusuario.model.Usuario;
+import com.ecomarket.autenticacionusuario.repository.DetallePagoRepository;
 import com.ecomarket.autenticacionusuario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +15,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/usuarios")
 
-public class ControladorUsuario {
+public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private DetallePagoRepository detallePagoRepository;
+
 
     @GetMapping
     public ResponseEntity<List<Usuario>> listarusUarios() {
@@ -37,9 +43,19 @@ public class ControladorUsuario {
     //AGREGAR USUARIO | Benja: Aqui te dejo algunas modificaciones.
     @PostMapping("/agregar")
     public ResponseEntity<Usuario> agregarUsuario(@RequestBody Usuario usuario) { // <= Modifique el retorno a ResponseEntity<Usuario>
+        // Validar si el correo esta asociado a una cuenta.
+        for (Usuario u : usuarioService.findAll()) {
+            if (u.getCorreo().equalsIgnoreCase(usuario.getCorreo())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            }
+        }
+
+        DetallePago detallePago = new DetallePago();
+        detallePago.setUsuario(usuario);
+        usuario.setDetallePago(detallePago);
 
         usuarioService.save(usuario); // Se guarda el usuario en la base de datos.
-        return ResponseEntity.ok(usuario); // <= Agregue esto (respuesta del servidor 200 (OK))
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario); // <= Agregue esto (respuesta del servidor 201 (CREATED))
     }
 
 

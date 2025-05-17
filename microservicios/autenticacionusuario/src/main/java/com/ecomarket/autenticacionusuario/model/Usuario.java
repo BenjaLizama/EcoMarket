@@ -1,5 +1,6 @@
 package com.ecomarket.autenticacionusuario.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,5 +38,6 @@ public class Usuario {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "detalle_pago_id")
+    @JsonManagedReference
     private DetallePago detallePago;
 }
