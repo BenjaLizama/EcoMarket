@@ -1,0 +1,1 @@
+INSERT IGNORE INTO categoria (id_categoria, nombre) VALUES (1, 'Sin Categoria');
