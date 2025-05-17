@@ -42,8 +42,13 @@ public class UsuarioController {
 
     // BUSCAR USUARIO
     @GetMapping("{id}")
-    public Usuario buscarUsuario(@PathVariable Long id) {
-        return usuarioService.findById(id);
+    public ResponseEntity<Usuario> buscarUsuario(@PathVariable Long id) {
+        if (!usuarioService.existById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Usuario usuario = usuarioService.findById(id);
+        return ResponseEntity.ok(usuario);
     }
 
     //AGREGAR USUARIO | Benja: Aqui te dejo algunas modificaciones.
@@ -76,6 +81,7 @@ public class UsuarioController {
         usuarioService.delete(usuario.getId());
         return ResponseEntity.noContent().build();
     }
+
 
     // Actualizar usuario
     @PutMapping("/actualizar/{id}")
@@ -115,6 +121,7 @@ public class UsuarioController {
         Set<Tarjeta> listaTarjetas = usuario.getMetodoPago().getTarjetaList();
         return ResponseEntity.ok(listaTarjetas);
     }
+
 
     // Agregar tarjeta
     @PostMapping("/{id}/metodo_pago/agregar")
