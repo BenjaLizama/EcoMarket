@@ -35,7 +35,7 @@ public class Usuario {
     @Column(nullable = false)
     private boolean estado; // Lombok genera getters y setters de forma automatica. Si quieres crear uno asegurate de que este contenga el nombre de la variable de la siguiente forma: (getEstado o setEstado)
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "detalle_pago_id")
     private DetallePago detallePago;
 }
