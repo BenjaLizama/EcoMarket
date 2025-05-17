@@ -5,6 +5,9 @@ import com.ecomarket.autenticacionusuario.model.MetodoPago;
 import com.ecomarket.autenticacionusuario.model.Tarjeta;
 import com.ecomarket.autenticacionusuario.model.Usuario;
 import com.ecomarket.autenticacionusuario.repository.MetodoPagoRepository;
+import com.ecomarket.autenticacionusuario.repository.TarjetaRepository;
+import com.ecomarket.autenticacionusuario.service.MetodoPagoService;
+import com.ecomarket.autenticacionusuario.service.TarjetaService;
 import com.ecomarket.autenticacionusuario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -22,7 +26,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
-    private MetodoPagoRepository metodoPagoRepository;
+    private MetodoPagoService metodoPagoService;
+    @Autowired
+    private TarjetaService tarjetaService;
 
 
     @GetMapping
@@ -110,6 +116,26 @@ public class UsuarioController {
         // Obtenemos su lisatdo de tarjetas.
         Set<Tarjeta> listaTarjetas = usuario.getMetodoPago().getTarjetaList();
         return ResponseEntity.ok(listaTarjetas);
+    }
+
+    // Agregar tarjeta
+    @PostMapping("/{id}/metodo_pago/agregar")
+    public ResponseEntity<Tarjeta> agregarTarjeta(@PathVariable Long id, @RequestBody Tarjeta tarjeta) {
+        // Valida si existe el usuario.
+        if (!usuarioService.existById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        tarjetaService.save(tarjeta);
+
+        Usuario usuario = usuarioService.findById(id);
+        MetodoPago metodoPago = usuario.getMetodoPago();
+
+        metodoPago.getTarjetaList().add(tarjeta);
+        metodoPagoService.save(metodoPago);
+        usuarioService.save(usuario);
+
+        return ResponseEntity.ok(tarjeta);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.ecomarket.autenticacionusuario.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,24 +13,22 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idDetallePago")  // Evita la recursión infinita
+@JsonIgnoreProperties({"usuario"})  // Ignorar la propiedad para evitar recursión
 public class MetodoPago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDetallePago;
 
-
     @OneToOne(mappedBy = "metodoPago")
-    @JsonBackReference
     private Usuario usuario;
 
-
-    @ManyToMany // Relacion muchos a muchos.
-    @JoinTable( // Tabla intermedia que usara JPA para representar la relacion.
-            name = "tarjeta_metodo_pago", // Nombre de la tabla intermedia.
-            joinColumns = @JoinColumn(name = "metodo_pago_id"), // Define la columna en la tabla intermedia que referencia fk de detalle_pago
-            inverseJoinColumns = @JoinColumn(name = "tarjeta_id") // Define la columna en la tabla intermedia que referencia fk de tarjeta
+    @ManyToMany // Relacion muchos a muchos
+    @JoinTable(
+            name = "tarjeta_metodo_pago",
+            joinColumns = @JoinColumn(name = "metodo_pago_id"),
+            inverseJoinColumns = @JoinColumn(name = "tarjeta_id")
     )
-    private Set<Tarjeta> tarjetaList; // Generamos una lista que contenga diferentes tarjetas.
-
+    private Set<Tarjeta> tarjetaList;
 }

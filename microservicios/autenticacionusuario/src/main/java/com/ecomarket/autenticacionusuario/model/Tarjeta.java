@@ -1,6 +1,6 @@
 package com.ecomarket.autenticacionusuario.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +13,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTarjeta")  // Evita la recursión infinita
+@JsonIgnoreProperties({"metodoPagoList"})  // Ignorar la propiedad para evitar recursión
 public class Tarjeta {
 
     @Id
@@ -20,16 +22,12 @@ public class Tarjeta {
     private Long idTarjeta;
 
     @Column(nullable = false, unique = true)
-    private String numeroTarjeta; // Usar Integer puede ser un problema, si empieza por 0 este sera eliminado/ignorado. Aparte no vamos a hacer operaciones matematicas.
+    private String numeroTarjeta;
 
     @Column(nullable = false)
     private String codigoTarjeta;
 
     @Column(nullable = false)
     private String datosDuenioTarjeta;
-
-    @ManyToMany(mappedBy = "tarjetaList") // Le dice a JPA que esta relacion ya esta definida en la entidad DetallePago en su variable "tarjetaList".
-    @JsonIgnore
-    private Set<MetodoPago> metodoPagoList; // Set evia automaticamente duplicados en memoria.
 
 }

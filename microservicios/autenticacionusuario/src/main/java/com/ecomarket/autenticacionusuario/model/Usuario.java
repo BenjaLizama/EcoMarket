@@ -1,6 +1,8 @@
 package com.ecomarket.autenticacionusuario.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,15 +13,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")  // Evita la recursión infinita
 public class Usuario {
 
-
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String correo;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  id;
+    private Long id;
 
     @Column(nullable = false)
     private String nombre;
@@ -34,10 +36,9 @@ public class Usuario {
     private int tipoUsuario;
 
     @Column(nullable = false)
-    private boolean estado; // Lombok genera getters y setters de forma automatica. Si quieres crear uno asegurate de que este contenga el nombre de la variable de la siguiente forma: (getEstado o setEstado)
+    private boolean estado;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "detalle_pago_id")
-    @JsonManagedReference
-    private MetodoPago metodoPago;
+    @JoinColumn(name = "metodo_pago_id")
+    private MetodoPago metodoPago; // Ya no es necesario JsonManagedReference
 }

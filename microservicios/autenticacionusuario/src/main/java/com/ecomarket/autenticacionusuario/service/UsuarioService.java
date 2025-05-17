@@ -13,7 +13,6 @@ import java.util.List;
 public class UsuarioService {
 
     @Autowired
-
     private UsuarioRepository usuarioRepository;
 
     public Boolean existById(Long id) {return  usuarioRepository.existsById(id);}
