@@ -16,12 +16,13 @@ import lombok.NoArgsConstructor;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")  // Evita la recursión infinita
 public class Usuario {
 
-    @Column(nullable = false, unique = true)
-    private String correo;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String correo;
 
     @Column(nullable = false)
     private String nombre;
