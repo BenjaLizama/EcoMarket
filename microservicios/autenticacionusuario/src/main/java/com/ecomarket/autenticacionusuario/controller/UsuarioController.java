@@ -1,6 +1,8 @@
 package com.ecomarket.autenticacionusuario.controller;
 
 
+import com.ecomarket.autenticacionusuario.dto.ActivacionDTO;
+import com.ecomarket.autenticacionusuario.dto.LoginDTO;
 import com.ecomarket.autenticacionusuario.model.MetodoPago;
 import com.ecomarket.autenticacionusuario.model.Tarjeta;
 import com.ecomarket.autenticacionusuario.model.Usuario;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Set;
@@ -143,6 +146,33 @@ public class UsuarioController {
         usuarioService.save(usuario);
 
         return ResponseEntity.ok(tarjeta);
+    }
+
+
+    // Inicio de sesion | Esto se puede hacer con un @RequestBody usando una clase DTO para no exponer el correo y la clave.
+    @GetMapping("/inicio sesion")
+    public ResponseEntity<Usuario> iniciarSesion(@RequestBody LoginDTO loginDTO) {
+        Usuario usuario = usuarioService.findByCorreo(loginDTO.getCorreo());
+        if (usuario == null || !usuario.getClave().equals(loginDTO.getClave())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Correo o clave inválidos");
+        }
+
+        return ResponseEntity.ok(usuario);
+    }
+
+
+    // Activar o desactivar perfiles de usuario.
+    @PutMapping("/{id}/activacion")
+    public ResponseEntity<Usuario> activacion(@PathVariable Long id, @RequestBody ActivacionDTO activacionDTO) {
+        if (!usuarioService.existById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Usuario usuarioActual = usuarioService.findById(id);
+        usuarioActual.setEstado(activacionDTO.getEstado());
+        usuarioService.save(usuarioActual);
+
+        return ResponseEntity.ok(usuarioActual);
     }
 
 }

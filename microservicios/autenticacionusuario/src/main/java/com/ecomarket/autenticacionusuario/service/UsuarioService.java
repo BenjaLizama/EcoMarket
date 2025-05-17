@@ -25,6 +25,8 @@ public class UsuarioService {
 
     public Usuario save(Usuario usuario) {return usuarioRepository.save(usuario);}
 
+    public Usuario findByCorreo(String correo) { return usuarioRepository.findByCorreo(correo); }
+
     public void cambiarEstadoCuenta(Long id, boolean nuevoEstado) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         usuario.setEstado(nuevoEstado);
