@@ -38,11 +38,6 @@ public class Producto {
     private Stock stock;
 
 
-    /*
-
-
-    @JsonManagedReference
-    */
     @ManyToOne
     @JoinColumn(name = "categoria", nullable = true)
     @JsonBackReference

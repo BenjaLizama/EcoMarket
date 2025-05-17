@@ -26,10 +26,6 @@ public class Categoria {
     private String nombre;
 
 
-    /*
-
-    @JsonIgnore
-    */
     @OneToMany(mappedBy = "categoria")
     @JsonIgnore
     private List<Producto> productoList;
