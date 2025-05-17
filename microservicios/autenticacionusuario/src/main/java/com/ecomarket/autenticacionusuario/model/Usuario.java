@@ -33,10 +33,6 @@ public class Usuario {
     private int tipoUsuario;
 
     @Column(nullable = false)
-    private boolean estado;
-
-    public void setActivo(boolean estado) {
-        this.estado = estado;
-    }
+    private boolean estado; // Lombok genera getters y setters de forma automatica. Si quieres crear uno asegurate de que este contenga el nombre de la variable de la siguiente forma: (getEstado o setEstado)
 
 }

@@ -28,7 +28,7 @@ public class UsuarioService {
 
     public void cambiarEstadoCuenta(Long id, boolean nuevoEstado) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        usuario.setActivo(nuevoEstado);
+        usuario.setEstado(nuevoEstado);
         usuarioRepository.save(usuario);
     }
 }
