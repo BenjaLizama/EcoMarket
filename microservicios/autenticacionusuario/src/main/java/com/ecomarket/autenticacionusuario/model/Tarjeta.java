@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,6 +30,6 @@ public class Tarjeta {
 
     @ManyToMany(mappedBy = "tarjetaList") // Le dice a JPA que esta relacion ya esta definida en la entidad DetallePago en su variable "tarjetaList".
     @JsonIgnore
-    private Set<DetallePago> detallePagoList; // Set evia automaticamente duplicados en memoria.
+    private Set<MetodoPago> metodoPagoList; // Set evia automaticamente duplicados en memoria.
 
 }

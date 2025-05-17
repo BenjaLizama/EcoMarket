@@ -1,9 +1,10 @@
 package com.ecomarket.autenticacionusuario.controller;
 
 
-import com.ecomarket.autenticacionusuario.model.DetallePago;
+import com.ecomarket.autenticacionusuario.model.MetodoPago;
+import com.ecomarket.autenticacionusuario.model.Tarjeta;
 import com.ecomarket.autenticacionusuario.model.Usuario;
-import com.ecomarket.autenticacionusuario.repository.DetallePagoRepository;
+import com.ecomarket.autenticacionusuario.repository.MetodoPagoRepository;
 import com.ecomarket.autenticacionusuario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
@@ -20,7 +22,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
-    private DetallePagoRepository detallePagoRepository;
+    private MetodoPagoRepository metodoPagoRepository;
 
 
     @GetMapping
@@ -50,9 +52,9 @@ public class UsuarioController {
             }
         }
 
-        DetallePago detallePago = new DetallePago();
-        detallePago.setUsuario(usuario);
-        usuario.setDetallePago(detallePago);
+        MetodoPago metodoPago = new MetodoPago();
+        metodoPago.setUsuario(usuario);
+        usuario.setMetodoPago(metodoPago);
 
         usuarioService.save(usuario); // Se guarda el usuario en la base de datos.
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario); // <= Agregue esto (respuesta del servidor 201 (CREATED))
@@ -92,6 +94,22 @@ public class UsuarioController {
         // Guardamos usuarioActualizado.
         usuarioService.save(usuarioActualizado);
         return ResponseEntity.ok(usuarioActualizado);
+    }
+
+
+    // Obtener lista metodos de pago.
+    @GetMapping("/{id}/metodo_pago")
+    public ResponseEntity<Set<Tarjeta>> otenerMetodosPago(@PathVariable Long id) {
+        // Valida si existe el usuario.
+        if (!usuarioService.existById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Instanciamos al usuario
+        Usuario usuario = usuarioService.findById(id);
+        // Obtenemos su lisatdo de tarjetas.
+        Set<Tarjeta> listaTarjetas = usuario.getMetodoPago().getTarjetaList();
+        return ResponseEntity.ok(listaTarjetas);
     }
 
 }

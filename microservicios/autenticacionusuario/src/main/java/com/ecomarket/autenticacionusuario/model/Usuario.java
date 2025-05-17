@@ -39,5 +39,5 @@ public class Usuario {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "detalle_pago_id")
     @JsonManagedReference
-    private DetallePago detallePago;
+    private MetodoPago metodoPago;
 }
