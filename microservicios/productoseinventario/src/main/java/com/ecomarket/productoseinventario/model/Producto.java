@@ -2,6 +2,7 @@ package com.ecomarket.productoseinventario.model;
 
 import com.ecomarket.productoseinventario.repository.StockRepository;
 import com.ecomarket.productoseinventario.services.CategoriaService;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,14 +33,18 @@ public class Producto {
     // Implementar conexiones (Categoria, Stock)
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "stock_id")
+    @JoinColumn(name = "stock_id", nullable = true)
     @JsonManagedReference
     private Stock stock;
 
 
-    @ManyToOne
-    @JoinColumn(name = "categoria")
-    @JsonManagedReference
-    private Categoria categoria;
+    /*
 
+
+    @JsonManagedReference
+    */
+    @ManyToOne
+    @JoinColumn(name = "categoria", nullable = true)
+    @JsonBackReference
+    private Categoria categoria;
 }

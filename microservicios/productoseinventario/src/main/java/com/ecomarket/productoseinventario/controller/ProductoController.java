@@ -93,7 +93,7 @@ public class ProductoController {
         }
 
         Producto producto = productoService.findById(id);
-        Long stockId = producto.getStock().getId();
+        Long stockId = producto.getStock().getIdStock();
 
         productoService.delete(id);     // Elimina el producto
         stockService.delete(stockId);   // Elimina el stock relacionado
@@ -111,7 +111,7 @@ public class ProductoController {
 
         // Obtendremos el producto actual según su ID (tambien todos sus campos)
         Producto productoActual = productoService.findById(id);
-        productoActual.setId(productoService.findById(id).getId());
+        productoActual.setIdProducto(productoService.findById(id).getIdProducto());
         productoActual.setNombre(productoService.findById(id).getNombre());
         productoActual.setDescripcion(productoService.findById(id).getDescripcion());
         productoActual.setPrecio(productoService.findById(id).getPrecio());
