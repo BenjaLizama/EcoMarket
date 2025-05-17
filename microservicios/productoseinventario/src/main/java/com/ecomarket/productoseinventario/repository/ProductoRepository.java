@@ -20,7 +20,12 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
    - count()
     */
 
+    // Se encarga de traer los productos que tienen stock disponible.
     @Query("SELECT p FROM Producto p WHERE p.stock.cantidad > 0")
     List<Producto> buscarProductosDisponibles();
+
+    // Se encarga de traer los productos que no tienen stock disponible.
+    @Query("SELECT p FROM Producto p WHERE p.stock.cantidad <= 0")
+    List<Producto> buscarProductosNoDisponibles();
 
 }
