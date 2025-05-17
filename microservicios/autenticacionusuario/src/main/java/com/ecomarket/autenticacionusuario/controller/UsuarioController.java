@@ -175,4 +175,16 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioActual);
     }
 
+
+    // Listar usuarios activos
+    @GetMapping("/activos")
+    public ResponseEntity<List<Usuario>> usuariosActivos() {
+        if (usuarioService.usuariosActivos().isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        List<Usuario> lista = usuarioService.usuariosActivos();
+        return ResponseEntity.ok(lista);
+    }
+
 }

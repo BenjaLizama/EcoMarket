@@ -33,11 +33,11 @@ public class Usuario {
     @Column(nullable = true)
     private String direccion;
 
-    @Column(nullable = false)
-    private int tipoUsuario;
+    //@Column(nullable = false)
+    //private int tipoUsuario;
 
     @Column(nullable = false)
-    private boolean estado;
+    private Boolean estado;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "metodo_pago_id")

@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
@@ -24,5 +26,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     // Obtener correo
     @Query(value = "SELECT * FROM usuario u WHERE u.correo = :correo;", nativeQuery = true)
     public Usuario findByCorreo(@Param("correo") String correo);
+
+    // Usuarios activos
+    @Query(value = "SELECT * FROM usuario u WHERE u.estado = true;", nativeQuery = true)
+    public List<Usuario> usuariosActivos();
 
 }

@@ -27,6 +27,8 @@ public class UsuarioService {
 
     public Usuario findByCorreo(String correo) { return usuarioRepository.findByCorreo(correo); }
 
+    public List<Usuario> usuariosActivos() { return usuarioRepository.usuariosActivos(); }
+
     public void cambiarEstadoCuenta(Long id, boolean nuevoEstado) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         usuario.setEstado(nuevoEstado);
