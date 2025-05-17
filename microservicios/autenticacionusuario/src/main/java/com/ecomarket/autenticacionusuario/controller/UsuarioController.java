@@ -4,8 +4,6 @@ package com.ecomarket.autenticacionusuario.controller;
 import com.ecomarket.autenticacionusuario.model.MetodoPago;
 import com.ecomarket.autenticacionusuario.model.Tarjeta;
 import com.ecomarket.autenticacionusuario.model.Usuario;
-import com.ecomarket.autenticacionusuario.repository.MetodoPagoRepository;
-import com.ecomarket.autenticacionusuario.repository.TarjetaRepository;
 import com.ecomarket.autenticacionusuario.service.MetodoPagoService;
 import com.ecomarket.autenticacionusuario.service.TarjetaService;
 import com.ecomarket.autenticacionusuario.service.UsuarioService;
