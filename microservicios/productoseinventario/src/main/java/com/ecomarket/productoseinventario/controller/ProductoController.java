@@ -1,6 +1,7 @@
 package com.ecomarket.productoseinventario.controller;
 
 
+import com.ecomarket.productoseinventario.dto.ActualizarCategoriaDTO;
 import com.ecomarket.productoseinventario.dto.ActualizarProductoDTO;
 import com.ecomarket.productoseinventario.dto.BuscarDTO;
 import com.ecomarket.productoseinventario.dto.StockDTO;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @RestController
@@ -132,29 +134,31 @@ public class ProductoController {
 
 
     // Actualizar categoria de un producto.
-    @PutMapping("/actualizar/{id}/categoria/{nombreCategoria}")
-    public ResponseEntity<Producto> actualizarCategoriaProducto(@PathVariable Long id, @PathVariable String nombreCategoria) {
+    @PutMapping("/{id}/categoria")
+    public ResponseEntity<Object> actualizarCategoriaProducto(@PathVariable Long id, @RequestBody ActualizarCategoriaDTO actualizarCategoriaDTO) {
+        // Validar si existe el producto.
         if (!productoService.existById(id)) {
-            ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
 
-        // Obtener producto.
+        // Validar que el nombre de categoria no este vacio.
+        if (actualizarCategoriaDTO.getNombreCategoria() == null || actualizarCategoriaDTO.getNombreCategoria().isBlank()) {
+            return ResponseEntity.badRequest().body("El nombre de la categoria no puede estar vacio.");
+        }
+
+        // Instanciamos producto y categoria.
         Producto producto = productoService.findById(id);
+        Optional<Categoria> categoria = categoriaService.findByNombreCategoria(actualizarCategoriaDTO.getNombreCategoria());
 
-        // Buscamos la categoria.
-        for (Categoria categoria : categoriaService.findAll()) {
-            if (nombreCategoria.toLowerCase().equals(categoria.getNombreCategoria().toLowerCase())) {
-                // Se settea la categoria al producto y luego se guarda en la base de datos.
-                producto.setCategoria(categoria);
-                productoService.save(producto);
-
-                // Retorna 200 (Ok) y muestra el producto actualizado.
-                return ResponseEntity.ok(producto);
-            }
+        // Validar si se encontro categoria.
+        if (categoria.isEmpty()) {
+            return ResponseEntity.badRequest().body("Categoria " + actualizarCategoriaDTO.getNombreCategoria() + " no encontrada.");
         }
 
-        // No se encontro la categoria; Retorna 404 (Not Found)
-        return ResponseEntity.notFound().build();
+        // Asignamos la nueva categoria.
+        producto.setCategoria(categoria.get());
+        productoService.save(producto);
+        return ResponseEntity.ok(producto);
     }
 
 

@@ -20,6 +20,8 @@ public class CategoriaService {
 
     public Optional<Categoria> findById(Long id) { return categoriaRepository.findById(id); }
 
+    public Optional<Categoria> findByNombreCategoria(String nombreCategoria) { return categoriaRepository.findByNombreCategoria(nombreCategoria); }
+
     public Boolean existById(Long id) { return categoriaRepository.existsById(id); }
 
     public Categoria save(Categoria categoria) { return categoriaRepository.save(categoria); }
