@@ -1,4 +1,4 @@
-package com.ecomarket.productoseinventario.model;
+package com.ecomarket.autenticacionusuario.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
