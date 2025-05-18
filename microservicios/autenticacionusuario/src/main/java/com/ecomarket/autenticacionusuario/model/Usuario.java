@@ -33,8 +33,10 @@ public class Usuario {
     @Column(nullable = true)
     private String direccion;
 
-    //@Column(nullable = false)
-    //private int tipoUsuario;
+    @OneToOne()
+    @JoinColumn(name = "tipo_cuenta_id", nullable = false)
+    @JsonManagedReference
+    private TipoCuenta tipoCuenta;
 
     @Column(nullable = false)
     private Boolean estado;
