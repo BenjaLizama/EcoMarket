@@ -3,6 +3,7 @@ package com.ecomarket.productoseinventario.controller;
 
 import com.ecomarket.productoseinventario.dto.ActualizarProductoDTO;
 import com.ecomarket.productoseinventario.dto.BuscarDTO;
+import com.ecomarket.productoseinventario.dto.StockDTO;
 import com.ecomarket.productoseinventario.model.Categoria;
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
@@ -106,25 +107,26 @@ public class ProductoController {
 
 
     // Actualizar stock.
-    @PutMapping("/actualizar/{id}/stock/{cantidad}")
-    public ResponseEntity<Producto> actualizarStockProducto(@PathVariable Long id, @PathVariable Integer cantidad) {
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<Object> actualizarStockProducto(@PathVariable Long id, @RequestBody StockDTO stockDTO) {
         if (!productoService.existById(id)) {
             return ResponseEntity.notFound().build(); // Si no se encuentra el id retorna 404 (Not Found)
         }
 
-        // Obtendremos el producto actual según su ID (tambien todos sus campos)
+        // Obtendremos el producto actual según su ID.
         Producto productoActual = productoService.findById(id);
-        productoActual.setIdProducto(productoService.findById(id).getIdProducto());
-        productoActual.setNombreProducto(productoService.findById(id).getNombreProducto());
-        productoActual.setDescripcion(productoService.findById(id).getDescripcion());
-        productoActual.setPrecio(productoService.findById(id).getPrecio());
+        Stock stock = productoActual.getStock();
 
-        // Obtenemos el stock y actualizamos su cantidad.
-        productoActual.setStock(productoService.findById(id).getStock());
-        productoActual.getStock().setCantidad(cantidad);
-        productoActual.getStock().setFecha_actualizacion(LocalDateTime.now());
+        if (stockDTO.getNuevoStock() == null || stockDTO.getNuevoStock() < 0) {
+            return ResponseEntity.badRequest().body("El stock no puede ser menor a 0");
+        }
 
+        stock.setCantidad(stockDTO.getNuevoStock());
+        stockService.save(stock);
+
+        productoActual.setStock(stock);
         productoService.save(productoActual);
+
         return ResponseEntity.ok(productoActual);
     }
 
