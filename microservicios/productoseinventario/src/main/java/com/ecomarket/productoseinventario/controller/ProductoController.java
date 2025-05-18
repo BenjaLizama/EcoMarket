@@ -1,6 +1,7 @@
 package com.ecomarket.productoseinventario.controller;
 
 
+import com.ecomarket.productoseinventario.dto.ActualizarProductoDTO;
 import com.ecomarket.productoseinventario.dto.BuscarDTO;
 import com.ecomarket.productoseinventario.model.Categoria;
 import com.ecomarket.productoseinventario.model.Producto;
@@ -69,7 +70,7 @@ public class ProductoController {
 
     // Actualizar producto.
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody ActualizarProductoDTO actualizarProductoDTO) {
         // Validar si existe el producto.
         if (!productoService.existById(id)) {
             return ResponseEntity.notFound().build();
@@ -77,11 +78,11 @@ public class ProductoController {
 
         // Obtener el producto actual y settear sus valores.
         Producto productoActual = productoService.findById(id);
-        productoActual.setNombreProducto(producto.getNombreProducto());
-        productoActual.setDescripcion(producto.getDescripcion());
-        productoActual.setPrecio(producto.getPrecio());
+        if (!actualizarProductoDTO.getNombre().isBlank()) { productoActual.setNombreProducto(actualizarProductoDTO.getNombre()); }
+        if (!actualizarProductoDTO.getDescripcion().isBlank()) { productoActual.setDescripcion(actualizarProductoDTO.getDescripcion()); }
+        if (actualizarProductoDTO.getPrecio() != null) { productoActual.setPrecio(actualizarProductoDTO.getPrecio()); }
 
-        // Guardar el producto actualizado y retornar.
+        // Guardar el producto actualizado y lo devuelve.
         Producto productoActualizado = productoService.save(productoActual);
         return ResponseEntity.ok(productoActualizado);
     }
