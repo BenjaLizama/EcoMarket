@@ -60,6 +60,7 @@ public class ProductoController {
         stockService.save(nuevoStock);
 
         producto.setStock(nuevoStock);
+        producto.setCategoria(categoriaService.findById(1L).get());
 
         productoService.save(producto); // Guarda el nuevo producto en la base de datos.
         return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
