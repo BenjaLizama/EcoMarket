@@ -3,11 +3,14 @@ package com.ecomarket.autenticacionusuario.controller;
 
 import com.ecomarket.autenticacionusuario.dto.ActivacionDTO;
 import com.ecomarket.autenticacionusuario.dto.LoginDTO;
+import com.ecomarket.autenticacionusuario.dto.PermisosDTO;
 import com.ecomarket.autenticacionusuario.model.MetodoPago;
 import com.ecomarket.autenticacionusuario.model.Tarjeta;
+import com.ecomarket.autenticacionusuario.model.TipoCuenta;
 import com.ecomarket.autenticacionusuario.model.Usuario;
 import com.ecomarket.autenticacionusuario.service.MetodoPagoService;
 import com.ecomarket.autenticacionusuario.service.TarjetaService;
+import com.ecomarket.autenticacionusuario.service.TipoCuentaService;
 import com.ecomarket.autenticacionusuario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +32,8 @@ public class UsuarioController {
     private MetodoPagoService metodoPagoService;
     @Autowired
     private TarjetaService tarjetaService;
+    @Autowired
+    private TipoCuentaService tipoCuentaService;
 
 
     @GetMapping
@@ -67,6 +72,8 @@ public class UsuarioController {
         MetodoPago metodoPago = new MetodoPago();
         metodoPago.setUsuario(usuario);
         usuario.setMetodoPago(metodoPago);
+        usuario.setTipoCuenta(tipoCuentaService.findById(1L)); // Asignamos el tipo de cuenta estandar (Usuario)
+        usuario.setEstado(false);
 
         usuarioService.save(usuario); // Se guarda el usuario en la base de datos.
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario); // <= Agregue esto (respuesta del servidor 201 (CREATED))
@@ -185,6 +192,21 @@ public class UsuarioController {
 
         List<Usuario> lista = usuarioService.usuariosActivos();
         return ResponseEntity.ok(lista);
+    }
+
+
+    // Asignar permisos
+    @PutMapping("/{id}/tipo")
+    public ResponseEntity<Usuario> actualizarTipo(@PathVariable Long id, @RequestBody PermisosDTO permisosDTO) {
+        if (!usuarioService.existById(id)) {
+          return ResponseEntity.notFound().build();
+        }
+
+        Usuario usuario = usuarioService.findById(id);
+        TipoCuenta tipoCuenta = tipoCuentaService.findById(permisosDTO.getTipoCuenta());
+        usuario.setTipoCuenta(tipoCuenta);
+        usuarioService.save(usuario);
+        return ResponseEntity.ok(usuario);
     }
 
 }
