@@ -34,7 +34,7 @@ public class CategoriaController {
     @PostMapping("/agregar")
     public ResponseEntity<Categoria> agregarCategoria(@RequestBody Categoria categoria) {
         Categoria categoriaNueva = new Categoria(); // Se instancia una nueva categoria.
-        categoriaNueva.setNombre(categoria.getNombre()); // Se settea el nombre de la categoria a categoriaNueva.
+        categoriaNueva.setNombreCategoria(categoria.getNombreCategoria()); // Se settea el nombre de la categoria a categoriaNueva.
 
         categoriaService.save(categoriaNueva); // Se almacena la nueva categoria en la base de datos.
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaNueva); // Se retorna la respuesta http 200 (Ok).
@@ -49,7 +49,7 @@ public class CategoriaController {
         }
 
         Categoria categoria = categoriaService.findById(id).get(); // Se obtiene la categoria por su id.
-        categoria.setNombre(nombre); // Se settea el nuevo nombre.
+        categoria.setNombreCategoria(nombre); // Se settea el nuevo nombre.
 
         categoriaService.save(categoria);
         return ResponseEntity.ok(categoria); // Retorna 200 (OK) y muestra la categoria.

@@ -1,6 +1,7 @@
 package com.ecomarket.productoseinventario.controller;
 
 
+import com.ecomarket.productoseinventario.dto.BuscarDTO;
 import com.ecomarket.productoseinventario.model.Categoria;
 import com.ecomarket.productoseinventario.model.Producto;
 import com.ecomarket.productoseinventario.model.Stock;
@@ -75,7 +76,7 @@ public class ProductoController {
 
         // Obtener el producto actual y settear sus valores.
         Producto productoActual = productoService.findById(id);
-        productoActual.setNombre(producto.getNombre());
+        productoActual.setNombreProducto(producto.getNombreProducto());
         productoActual.setDescripcion(producto.getDescripcion());
         productoActual.setPrecio(producto.getPrecio());
 
@@ -112,7 +113,7 @@ public class ProductoController {
         // Obtendremos el producto actual según su ID (tambien todos sus campos)
         Producto productoActual = productoService.findById(id);
         productoActual.setIdProducto(productoService.findById(id).getIdProducto());
-        productoActual.setNombre(productoService.findById(id).getNombre());
+        productoActual.setNombreProducto(productoService.findById(id).getNombreProducto());
         productoActual.setDescripcion(productoService.findById(id).getDescripcion());
         productoActual.setPrecio(productoService.findById(id).getPrecio());
 
@@ -138,7 +139,7 @@ public class ProductoController {
 
         // Buscamos la categoria.
         for (Categoria categoria : categoriaService.findAll()) {
-            if (nombreCategoria.toLowerCase().equals(categoria.getNombre().toLowerCase())) {
+            if (nombreCategoria.toLowerCase().equals(categoria.getNombreCategoria().toLowerCase())) {
                 // Se settea la categoria al producto y luego se guarda en la base de datos.
                 producto.setCategoria(categoria);
                 productoService.save(producto);
@@ -174,6 +175,18 @@ public class ProductoController {
         }
 
         return ResponseEntity.ok(lista);
+    }
+
+
+    // Buscar y filtrar productos
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Producto>> buscar(@RequestBody BuscarDTO buscarDTO) {
+        List<Producto> productoList = productoService.buscar(buscarDTO.getNombreProducto(), buscarDTO.getNombreCategoria());
+        if (productoList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(productoList);
     }
 
 }

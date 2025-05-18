@@ -1,8 +1,7 @@
 package com.ecomarket.productoseinventario.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,12 +22,11 @@ public class Categoria {
     private Long idCategoria;
 
     @Column(nullable = false)
-    private String nombre;
+    private String nombreCategoria;
 
 
     @OneToMany(mappedBy = "categoria")
     @JsonIgnore
     private List<Producto> productoList;
-
 
 }

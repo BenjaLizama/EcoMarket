@@ -34,6 +34,8 @@ public class ProductoService {
 
     public List<Producto> buscarProductosNoDisponibles() { return productoRepository.buscarProductosNoDisponibles(); }
 
+    public List<Producto> buscar(String nombreProducto, String nombreCategoria) { return productoRepository.buscar(nombreProducto, nombreCategoria); }
+
     public void delete(Long id) {
         productoRepository.deleteById(id);
     }

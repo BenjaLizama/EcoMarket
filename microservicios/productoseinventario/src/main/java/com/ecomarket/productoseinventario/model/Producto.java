@@ -22,7 +22,7 @@ public class Producto {
     private Long idProducto;
 
     @Column(nullable = false)
-    private String nombre;
+    private String nombreProducto;
 
     @Column(nullable = false)
     private String descripcion;
