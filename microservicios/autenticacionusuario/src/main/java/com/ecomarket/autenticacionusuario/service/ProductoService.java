@@ -15,10 +15,10 @@ public class ProductoService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public List<ProductoMP>  obtenerProductos() {
-        String url = "http://localhost:9093/api/v1/productos";
+        String URL_PRODUCTOS = "http://localhost:9093/api/v1/productos";
 
         ResponseEntity<List<ProductoMP>> respuesta = restTemplate.exchange(
-                url,
+                URL_PRODUCTOS,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<ProductoMP>>() {}

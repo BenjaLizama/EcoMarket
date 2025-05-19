@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @Service
 @Transactional
-public class CarritoServices {
+public class CarritoService {
 
     @Autowired
     private CarritoRepository carritoRepository;

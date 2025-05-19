@@ -30,6 +30,8 @@ public class UsuarioController {
     private TipoCuentaService tipoCuentaService;
     @Autowired
     private ProductoService productoService;
+    @Autowired
+    private CarritoMCService carritoMCService;
 
 
     @GetMapping
@@ -86,6 +88,7 @@ public class UsuarioController {
         nuevoUsuario.setDireccion(crearUsuarioDTO.getDireccion());
 
         usuarioService.save(nuevoUsuario); // Guardamos
+        carritoMCService.crearCarrito(nuevoUsuario.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
