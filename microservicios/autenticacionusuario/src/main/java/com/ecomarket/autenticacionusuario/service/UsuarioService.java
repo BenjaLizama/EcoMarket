@@ -27,6 +27,8 @@ public class UsuarioService {
 
     public Usuario findByCorreo(String correo) { return usuarioRepository.findByCorreo(correo); }
 
+    public Boolean existsByCorreo(String correo) { return usuarioRepository.existsByCorreo(correo); }
+
     public List<Usuario> usuariosActivos() { return usuarioRepository.usuariosActivos(); }
 
     public void cambiarEstadoCuenta(Long id, boolean nuevoEstado) {

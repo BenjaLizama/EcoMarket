@@ -1,10 +1,13 @@
 package com.ecomarket.autenticacionusuario.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "tipo_cuenta")
@@ -20,8 +23,8 @@ public class TipoCuenta {
     @Column(nullable = false)
     private String nombreTipoCuenta;
 
-    @OneToOne(mappedBy = "tipoCuenta")
-    @JsonBackReference
-    private Usuario usuario;
+    @OneToMany(mappedBy = "tipoCuenta")
+    @JsonIgnore
+    private List<Usuario> usuarios;
 
 }

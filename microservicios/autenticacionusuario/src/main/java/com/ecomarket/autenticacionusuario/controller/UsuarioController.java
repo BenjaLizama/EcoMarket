@@ -2,6 +2,7 @@ package com.ecomarket.autenticacionusuario.controller;
 
 
 import com.ecomarket.autenticacionusuario.dto.ActivacionDTO;
+import com.ecomarket.autenticacionusuario.dto.CrearUsuarioDTO;
 import com.ecomarket.autenticacionusuario.dto.LoginDTO;
 import com.ecomarket.autenticacionusuario.dto.PermisosDTO;
 import com.ecomarket.autenticacionusuario.model.MetodoPago;
@@ -61,22 +62,30 @@ public class UsuarioController {
 
     //AGREGAR USUARIO | Benja: Aqui te dejo algunas modificaciones.
     @PostMapping("/agregar")
-    public ResponseEntity<Usuario> agregarUsuario(@RequestBody Usuario usuario) { // <= Modifique el retorno a ResponseEntity<Usuario>
+    public ResponseEntity<Object> agregarUsuario(@RequestBody CrearUsuarioDTO crearUsuarioDTO) { // <= Modifique el retorno a ResponseEntity<Usuario>
         // Validar si el correo esta asociado a una cuenta.
-        for (Usuario u : usuarioService.findAll()) {
-            if (u.getCorreo().equalsIgnoreCase(usuario.getCorreo())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
-            }
+        if (usuarioService.existsByCorreo(crearUsuarioDTO.getCorreo())) {
+            return ResponseEntity.badRequest()
+                    .body("El correo se encuentra asociado a una cuenta.");
         }
 
-        MetodoPago metodoPago = new MetodoPago();
-        metodoPago.setUsuario(usuario);
-        usuario.setMetodoPago(metodoPago);
-        usuario.setTipoCuenta(tipoCuentaService.findById(1L)); // Asignamos el tipo de cuenta estandar (Usuario)
-        usuario.setEstado(false);
+        Usuario nuevoUsuario = new Usuario();
+        MetodoPago nuevoMetodoPago = new MetodoPago();
 
-        usuarioService.save(usuario); // Se guarda el usuario en la base de datos.
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuario); // <= Agregue esto (respuesta del servidor 201 (CREATED))
+        nuevoMetodoPago.setUsuario(nuevoUsuario);
+        nuevoUsuario.setMetodoPago(nuevoMetodoPago);
+
+        nuevoUsuario.setTipoCuenta(tipoCuentaService.findById(1L)); // Tipo cuenta basica | Nivel: Usuario
+        nuevoUsuario.setEstado(false); // Las nuevas cuentas requieren verificacion para ser activadas.
+
+        nuevoUsuario.setCorreo(crearUsuarioDTO.getCorreo());
+        nuevoUsuario.setClave(crearUsuarioDTO.getClave());
+        nuevoUsuario.setNombre(crearUsuarioDTO.getNombre());
+        nuevoUsuario.setApellido(crearUsuarioDTO.getApellido());
+        nuevoUsuario.setDireccion(crearUsuarioDTO.getDireccion());
+
+        usuarioService.save(nuevoUsuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
 

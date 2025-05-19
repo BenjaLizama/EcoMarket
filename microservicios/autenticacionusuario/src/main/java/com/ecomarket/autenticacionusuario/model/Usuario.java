@@ -28,14 +28,16 @@ public class Usuario {
     private String nombre;
 
     @Column(nullable = false)
+    private String apellido;
+
+    @Column(nullable = false)
     private String clave;
 
     @Column(nullable = true)
     private String direccion;
 
-    @OneToOne()
+    @ManyToOne
     @JoinColumn(name = "tipo_cuenta_id", nullable = false)
-    @JsonManagedReference
     private TipoCuenta tipoCuenta;
 
     @Column(nullable = false)

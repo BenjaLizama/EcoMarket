@@ -23,6 +23,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
    - count()
     */
 
+    public Boolean existsByCorreo(String correo);
+
     // Obtener correo
     @Query(value = "SELECT * FROM usuario u WHERE u.correo = :correo;", nativeQuery = true)
     public Usuario findByCorreo(@Param("correo") String correo);
