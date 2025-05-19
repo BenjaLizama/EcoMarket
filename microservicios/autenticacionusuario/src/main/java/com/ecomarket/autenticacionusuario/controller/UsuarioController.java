@@ -69,6 +69,7 @@ public class UsuarioController {
                     .body("El correo se encuentra asociado a una cuenta.");
         }
 
+        // Instancia de nuevo usuario y metodo pago.
         Usuario nuevoUsuario = new Usuario();
         MetodoPago nuevoMetodoPago = new MetodoPago();
 
