@@ -1,10 +1,7 @@
 package com.ecomarket.autenticacionusuario.controller;
 
 
-import com.ecomarket.autenticacionusuario.dto.ActivacionDTO;
-import com.ecomarket.autenticacionusuario.dto.CrearUsuarioDTO;
-import com.ecomarket.autenticacionusuario.dto.LoginDTO;
-import com.ecomarket.autenticacionusuario.dto.PermisosDTO;
+import com.ecomarket.autenticacionusuario.dto.*;
 import com.ecomarket.autenticacionusuario.model.MetodoPago;
 import com.ecomarket.autenticacionusuario.model.Tarjeta;
 import com.ecomarket.autenticacionusuario.model.TipoCuenta;
@@ -113,8 +110,8 @@ public class UsuarioController {
 
 
     // Actualizar usuario
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    @PutMapping("/{id}/actualizar}")
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody ActualizarUsuarioDTO actualizarUsuarioDTO) {
         // Si no existe el usuario retornara 404.
         if (!usuarioService.existById(id)) {
             return ResponseEntity.notFound().build();
@@ -123,12 +120,9 @@ public class UsuarioController {
         // Creamos una instancia llamada usuarioActualizado.
         Usuario usuarioActualizado = usuarioService.findById(id);
 
-        // Validamos si el campo del RequestBody no es null y si tampoco esta vacio para settear la nueva informacion.
-        // Esto permite actualizar solo los campos especificos, sin necesidad de reinsertar campos que no queremos actualizar.
-        if (usuario.getCorreo() != null && !usuario.getCorreo().isBlank()) { usuarioActualizado.setCorreo(usuario.getCorreo()); }
-        if (usuario.getNombre() != null && !usuario.getNombre().isBlank()) { usuarioActualizado.setNombre(usuario.getNombre()); }
-        if (usuario.getClave() != null && !usuario.getClave().isBlank()) { usuarioActualizado.setClave(usuario.getClave()); }
-        if (usuario.getDireccion() != null && !usuario.getDireccion().isBlank()) { usuarioActualizado.setDireccion(usuario.getDireccion()); }
+        if (!actualizarUsuarioDTO.getNombre().isEmpty()) { usuarioActualizado.setNombre(actualizarUsuarioDTO.getNombre()); }
+        if (!actualizarUsuarioDTO.getApellido().isEmpty()) { usuarioActualizado.setApellido(actualizarUsuarioDTO.getApellido()); }
+        if (!actualizarUsuarioDTO.getDireccion().isEmpty()) { usuarioActualizado.setDireccion(actualizarUsuarioDTO.getDireccion()); }
 
         // Guardamos usuarioActualizado.
         usuarioService.save(usuarioActualizado);
