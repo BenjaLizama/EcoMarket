@@ -2,14 +2,8 @@ package com.ecomarket.autenticacionusuario.controller;
 
 
 import com.ecomarket.autenticacionusuario.dto.*;
-import com.ecomarket.autenticacionusuario.model.MetodoPago;
-import com.ecomarket.autenticacionusuario.model.Tarjeta;
-import com.ecomarket.autenticacionusuario.model.TipoCuenta;
-import com.ecomarket.autenticacionusuario.model.Usuario;
-import com.ecomarket.autenticacionusuario.service.MetodoPagoService;
-import com.ecomarket.autenticacionusuario.service.TarjetaService;
-import com.ecomarket.autenticacionusuario.service.TipoCuentaService;
-import com.ecomarket.autenticacionusuario.service.UsuarioService;
+import com.ecomarket.autenticacionusuario.model.*;
+import com.ecomarket.autenticacionusuario.service.*;
 import com.ecomarket.autenticacionusuario.validator.CrearUsuarioDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +28,8 @@ public class UsuarioController {
     private TarjetaService tarjetaService;
     @Autowired
     private TipoCuentaService tipoCuentaService;
+    @Autowired
+    private ProductoService productoService;
 
 
     @GetMapping
@@ -110,7 +106,7 @@ public class UsuarioController {
 
 
     // Actualizar usuario
-    @PutMapping("/{id}/actualizar}")
+    @PutMapping("/{id}/actualizar")
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody ActualizarUsuarioDTO actualizarUsuarioDTO) {
         // Si no existe el usuario retornara 404.
         if (!usuarioService.existById(id)) {
@@ -218,6 +214,13 @@ public class UsuarioController {
         usuario.setTipoCuenta(tipoCuenta);
         usuarioService.save(usuario);
         return ResponseEntity.ok(usuario);
+    }
+
+    // Producto - Cliente
+    @GetMapping("/productos")
+    public ResponseEntity<List<ProductoMP>> obtenerProductos() {
+        List<ProductoMP> productoMPList = productoService.obtenerProductos();
+        return ResponseEntity.ok(productoMPList);
     }
 
 }

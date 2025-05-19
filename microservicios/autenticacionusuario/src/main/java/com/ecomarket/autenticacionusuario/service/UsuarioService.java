@@ -3,8 +3,10 @@ package com.ecomarket.autenticacionusuario.service;
 import com.ecomarket.autenticacionusuario.model.Usuario;
 import com.ecomarket.autenticacionusuario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
