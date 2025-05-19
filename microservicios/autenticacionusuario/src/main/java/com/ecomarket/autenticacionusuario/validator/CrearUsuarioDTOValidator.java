@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CrearUsuarioDTOValidator {
 
+    // Metodo estatico para validacion de errores en CrearUsuarioDTO.
     public static List<String> validarErrores(CrearUsuarioDTO crearUsuarioDTO) {
         List<String> errores = new ArrayList<>();
 

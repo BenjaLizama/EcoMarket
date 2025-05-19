@@ -92,7 +92,7 @@ public class UsuarioController {
         nuevoUsuario.setApellido(crearUsuarioDTO.getApellido());
         nuevoUsuario.setDireccion(crearUsuarioDTO.getDireccion());
 
-        usuarioService.save(nuevoUsuario);
+        usuarioService.save(nuevoUsuario); // Guardamos
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
