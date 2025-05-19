@@ -220,10 +220,29 @@ public class UsuarioController {
     }
 
     // Producto - Cliente
+
+    // Obtener productos desde el cliente.
     @GetMapping("/productos")
     public ResponseEntity<List<ProductoMP>> obtenerProductos() {
         List<ProductoMP> productoMPList = productoService.obtenerProductos();
         return ResponseEntity.ok(productoMPList);
+    }
+
+
+    // Obtener listado de productos dentro del carrito del cliente.
+    @GetMapping("/{idUsuario}/carrito")
+    public ResponseEntity<List<ItemDTO>> listarProductosCarrito(@PathVariable Long idUsuario) {
+        if (!usuarioService.existById(idUsuario)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        List<ItemDTO> productosCarrito = carritoMCService.listarProductosCarrito(idUsuario);
+
+        if (productosCarrito.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(productosCarrito);
     }
 
 }
