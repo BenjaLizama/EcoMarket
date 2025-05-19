@@ -13,6 +13,7 @@ import com.ecomarket.autenticacionusuario.service.MetodoPagoService;
 import com.ecomarket.autenticacionusuario.service.TarjetaService;
 import com.ecomarket.autenticacionusuario.service.TipoCuentaService;
 import com.ecomarket.autenticacionusuario.service.UsuarioService;
+import com.ecomarket.autenticacionusuario.validator.CrearUsuarioDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -60,16 +62,21 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    //AGREGAR USUARIO | Benja: Aqui te dejo algunas modificaciones.
+    //AGREGAR USUARIO
     @PostMapping("/agregar")
-    public ResponseEntity<Object> agregarUsuario(@RequestBody CrearUsuarioDTO crearUsuarioDTO) { // <= Modifique el retorno a ResponseEntity<Usuario>
-        // Validar si el correo esta asociado a una cuenta.
-        if (usuarioService.existsByCorreo(crearUsuarioDTO.getCorreo())) {
+    public ResponseEntity<?> agregarUsuario(@RequestBody CrearUsuarioDTO crearUsuarioDTO) { // <= Modifique el retorno a ResponseEntity<?>
+        List<String> listaErrores = CrearUsuarioDTOValidator.validarErrores(crearUsuarioDTO);
+
+        if (!listaErrores.isEmpty()) {
             return ResponseEntity.badRequest()
-                    .body("El correo se encuentra asociado a una cuenta.");
+                    .body(Map.of("errores", listaErrores));
         }
 
-        // Instancia de nuevo usuario y metodo pago.
+        if (usuarioService.existsByCorreo(crearUsuarioDTO.getCorreo())) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("errores", List.of("El correo se encuentra asociado a una cuenta.")));
+        }
+
         Usuario nuevoUsuario = new Usuario();
         MetodoPago nuevoMetodoPago = new MetodoPago();
 
