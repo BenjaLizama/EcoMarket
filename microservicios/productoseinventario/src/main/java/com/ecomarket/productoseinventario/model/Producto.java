@@ -1,7 +1,5 @@
 package com.ecomarket.productoseinventario.model;
 
-import com.ecomarket.productoseinventario.repository.StockRepository;
-import com.ecomarket.productoseinventario.services.CategoriaService;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
