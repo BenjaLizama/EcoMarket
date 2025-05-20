@@ -20,7 +20,7 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 
 ## Tareas
 
-### Productos e Inventario
+### Productos e Inventario (COMPLETADO)
 
 >Para cada una de las entidades que realicen operaciones CRUD.
 - [x] Crear Model.
@@ -32,12 +32,12 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 - [x] Se deben poder actualizar productos.
 - [x] Se deben poder eliminar productos.
 - [x] Se deben poder actualizar los stocks de los productos según se requiera.
-- [ ] Se deben poder actualizar los nombres de las categorias.
-- [ ] Las categorias deben contener un listado de todos los productos los cuales pertenecen a estas.
-- [ ] Implementar eliminacion de categorias.
-- [ ] Se debe poder agregar, actualizar o eliminar la categoria de un producto.
+- [x] Se deben poder actualizar los nombres de las categorias.
+- [x] Las categorias deben contener un listado de todos los productos los cuales pertenecen a estas.
+- [x] Implementar eliminacion de categorias.
+- [x] Se debe actualizar la categoria de un producto.
 
-### Carrito y Pedidos
+### Carrito y Pedidos (PENDIENTE)
 
 >Para cada una de las entidades que realicen operaciones CRUD.
 - [ ] Crear Model.
@@ -45,11 +45,11 @@ Cuando completes una tarea, marca la casilla de la siguiente manera:
 - [ ] Crear Controller.
 - [ ] Crear Services.
 
-### Autenticación de Usuario
+### Autenticación de Usuario (COMPLETADO)
 
 >Para cada una de las entidades que realicen operaciones CRUD.
 - [x] Crear Model.
 - [x] Crear Repository.
-- [ ] Crear Controller.
+- [x] Crear Controller.
 - [x] Crear Services.
 
