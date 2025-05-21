@@ -1,7 +1,6 @@
 package com.ecomarket.autenticacionusuario.service;
 
 import com.ecomarket.autenticacionusuario.dto.ItemDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,8 @@ public class CarritoMCService {
                     URL_LISTA_PRODUCTOS + idUsuario,
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<List<ItemDTO>>() {}
+                    new ParameterizedTypeReference<List<ItemDTO>>() {
+                    }
             );
             return respuesta.getBody();
         } catch (Exception e) {

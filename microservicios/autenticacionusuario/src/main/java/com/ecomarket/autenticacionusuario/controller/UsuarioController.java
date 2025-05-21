@@ -29,7 +29,7 @@ public class UsuarioController {
     @Autowired
     private TipoCuentaService tipoCuentaService;
     @Autowired
-    private ProductoService productoService;
+    private ProductoMCService productoMCService;
     @Autowired
     private CarritoMCService carritoMCService;
 
@@ -224,7 +224,7 @@ public class UsuarioController {
     // Obtener productos desde el cliente.
     @GetMapping("/productos")
     public ResponseEntity<List<ProductoMP>> obtenerProductos() {
-        List<ProductoMP> productoMPList = productoService.obtenerProductos();
+        List<ProductoMP> productoMPList = productoMCService.obtenerProductos();
         return ResponseEntity.ok(productoMPList);
     }
 

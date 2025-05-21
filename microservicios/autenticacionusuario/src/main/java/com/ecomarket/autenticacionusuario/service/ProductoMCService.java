@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class ProductoService {
+public class ProductoMCService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
