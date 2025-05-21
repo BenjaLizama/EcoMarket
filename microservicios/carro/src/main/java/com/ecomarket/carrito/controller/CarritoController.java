@@ -35,9 +35,9 @@ public class CarritoController {
 
     // Obtener productos dentro del carrito.
     @GetMapping("/productos/{idUsuario}")
-    public ResponseEntity<List<Item>> obtenerProductosEnCarrito(@PathVariable Long idUsario) {
+    public ResponseEntity<List<Item>> obtenerProductosEnCarrito(@PathVariable Long idUsuario) {
         try {
-            List<Item> itemList = carritoService.itemsCarrito(idUsario);
+            List<Item> itemList = carritoService.itemsCarrito(idUsuario);
             return ResponseEntity.ok(itemList);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
