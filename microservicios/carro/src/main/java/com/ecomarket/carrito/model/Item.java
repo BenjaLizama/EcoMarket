@@ -18,7 +18,4 @@ public class Item {
     @Column(nullable = false)
     private Long idProducto;
 
-    @Column(nullable = false)
-    private Integer cantidad;
-
 }

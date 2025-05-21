@@ -62,7 +62,6 @@ public class ProductoMSService {
 
             Item itemNuevo = new Item();
             itemNuevo.setIdProducto(idProducto);
-            itemNuevo.setCantidad(0);
 
             itemRepository.save(itemNuevo);
 
