@@ -5,6 +5,13 @@ import com.ecomarket.autenticacionusuario.dto.*;
 import com.ecomarket.autenticacionusuario.model.*;
 import com.ecomarket.autenticacionusuario.service.*;
 import com.ecomarket.autenticacionusuario.validator.CrearUsuarioDTOValidator;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +24,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
-
+@Tag(name = "Usuario", description = "Operaciones relacionadas con el usuario.")
 public class UsuarioController {
 
     @Autowired
@@ -35,6 +42,11 @@ public class UsuarioController {
 
 
     @GetMapping
+    @Operation(summary = "Obtener todos los usuarios.", description = "Obtiene un listado de todos los usuarios existentes.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Operacion exitosa."),
+            @ApiResponse(responseCode = "204", description = "Operacion exitosa, pero sin contenido.")
+    })
     public ResponseEntity<List<Usuario>> listarusUarios() {
         List<Usuario> usuarios = usuarioService.findAll();
 
@@ -48,6 +60,12 @@ public class UsuarioController {
 
     // BUSCAR USUARIO
     @GetMapping("/{id}")
+    @Operation(summary = "Obtener usuario.", description = "Obtiene un usuario segun el ID.")
+    @Parameter(description = "ID del usuario.", required = true)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado."),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado.")
+    })
     public ResponseEntity<Usuario> buscarUsuario(@PathVariable Long id) {
         if (!usuarioService.existById(id)) {
             return ResponseEntity.notFound().build();
@@ -59,6 +77,21 @@ public class UsuarioController {
 
     //AGREGAR USUARIO
     @PostMapping("/agregar")
+    @Operation(
+            summary = "Crear usuario.",
+            description = "Agrega un nuevo usuario al sistema.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos del nuevo usuario",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(implementation = CrearUsuarioDTO.class)
+                    )
+            )
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Usuario creado con exito"),
+        @ApiResponse(responseCode = "400", description = "Error al crar el usuario.")
+    })
     public ResponseEntity<?> agregarUsuario(@RequestBody CrearUsuarioDTO crearUsuarioDTO) { // <= Modifique el retorno a ResponseEntity<?>
         List<String> listaErrores = CrearUsuarioDTOValidator.validarErrores(crearUsuarioDTO);
 
