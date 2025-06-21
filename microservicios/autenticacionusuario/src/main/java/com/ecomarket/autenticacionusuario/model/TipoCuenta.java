@@ -1,6 +1,5 @@
 package com.ecomarket.autenticacionusuario.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,7 +19,7 @@ public class TipoCuenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTipoCuenta;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nombreTipoCuenta;
 
     @OneToMany(mappedBy = "tipoCuenta")

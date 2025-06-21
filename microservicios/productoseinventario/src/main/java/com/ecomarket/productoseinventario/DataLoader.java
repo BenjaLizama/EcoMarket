@@ -30,13 +30,14 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Faker faker = new Faker();
         Random random = new Random();
+        /*
         for (int i = 0; i < 5; i++) {
             Categoria nuevacategoria = new Categoria();
             nuevacategoria.setNombreCategoria(faker.lorem().toString());
             categoriaRepository.save(nuevacategoria);
 
 
-        }
+        }*/
 
         for (int i = 0; i < 10; i++) {
             Producto nuevoproducto = new Producto();

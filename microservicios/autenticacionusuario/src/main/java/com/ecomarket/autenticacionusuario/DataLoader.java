@@ -1,6 +1,5 @@
 package com.ecomarket.autenticacionusuario;
 
-import com.ecomarket.autenticacionusuario.model.TipoCuenta;
 import com.ecomarket.autenticacionusuario.model.Usuario;
 import com.ecomarket.autenticacionusuario.repository.UsuarioRepository;
 import com.ecomarket.autenticacionusuario.service.TipoCuentaService;
