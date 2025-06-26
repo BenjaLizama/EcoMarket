@@ -5,6 +5,8 @@ import com.ecomarket.carrito.model.Item;
 import com.ecomarket.carrito.model.ProductoMSDTO;
 import com.ecomarket.carrito.services.CarritoService;
 import com.ecomarket.carrito.services.ProductoMSService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/carrito")
+@Tag(name = "Carrito", description =" operaciones relacionadas al Carrito de compras")
 public class CarritoController {
 
     @Autowired
@@ -23,6 +26,7 @@ public class CarritoController {
 
     // Crear carrito para usuario => Segun ID
     @PostMapping("/crear/{idUsuario}")
+    @Operation(summary = "crear Carrito para usuario segun ID", description = "crea Carrito para el usuario segun el ID")
     public ResponseEntity<Carrito> crear(@PathVariable Long idUsuario) {
         try {
             Carrito nuevoCarrito = carritoService.crearCarrito(idUsuario);
@@ -35,6 +39,7 @@ public class CarritoController {
 
     // Obtener productos dentro del carrito.
     @GetMapping("/productos/{idUsuario}")
+    @Tag(name = "productos", description =" operacion pra obtener producto del carrito")
     public ResponseEntity<List<Item>> obtenerProductosEnCarrito(@PathVariable Long idUsuario) {
         try {
             List<Item> itemList = carritoService.itemsCarrito(idUsuario);
