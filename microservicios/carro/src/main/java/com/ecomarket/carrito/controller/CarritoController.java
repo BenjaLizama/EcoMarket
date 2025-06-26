@@ -39,7 +39,8 @@ public class CarritoController {
 
     // Obtener productos dentro del carrito.
     @GetMapping("/productos/{idUsuario}")
-    @Tag(name = "productos", description =" operacion pra obtener producto del carrito")
+    @Tag(name = "productos", description =" operacion relacionada producto del carrito")
+    @Operation(summary = "obtener producto", description = "obtener uno o varios productos dentro del carrito")
     public ResponseEntity<List<Item>> obtenerProductosEnCarrito(@PathVariable Long idUsuario) {
         try {
             List<Item> itemList = carritoService.itemsCarrito(idUsuario);
