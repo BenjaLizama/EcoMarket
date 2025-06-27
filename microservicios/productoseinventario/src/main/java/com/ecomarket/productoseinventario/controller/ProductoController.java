@@ -11,6 +11,13 @@ import com.ecomarket.productoseinventario.model.Stock;
 import com.ecomarket.productoseinventario.services.CategoriaService;
 import com.ecomarket.productoseinventario.services.ProductoService;
 import com.ecomarket.productoseinventario.services.StockService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +31,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/productos")
+@Tag(name = "Productos", description = "Operaciones relacionadas con productos del catálogo")
 public class ProductoController {
 
 
@@ -33,6 +41,12 @@ public class ProductoController {
     private StockService stockService;
     @Autowired
     private CategoriaService categoriaService;
+
+    @Operation(summary = "Listar todos los productos", description = "Retorna todos los productos registrados.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista de productos encontrada", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Producto.class)))),
+            @ApiResponse(responseCode = "204", description = "No hay productos registrados")
+    })
 
 
     @GetMapping // Solicitud Get
@@ -44,6 +58,12 @@ public class ProductoController {
         return ResponseEntity.ok(productos); // Devuelve el listado de productos encontrados.
     }
 
+    @Operation(summary = "Obtener un producto por ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Producto encontrado", content = @Content(schema = @Schema(implementation = Producto.class))),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    })
+
 
     @GetMapping("/{id}") // Recibe 'id' en la ruta de la petición HTTP
     public ResponseEntity<Producto> obtenerProducto(@PathVariable Long id) {
@@ -53,6 +73,11 @@ public class ProductoController {
         }
         return ResponseEntity.ok(producto); // Retorna 200 (OK) si encuentra el producto.
     }
+
+    @Operation(summary = "Agregar un nuevo producto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Producto creado correctamente", content = @Content(schema = @Schema(implementation = Producto.class)))
+    })
 
 
     // Agrega productos.
@@ -70,10 +95,17 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
     }
 
+    @Operation(summary = "Actualizar un producto existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Producto actualizado correctamente"),
+            @ApiResponse(responseCode = "404", description = "not found")
+    })
+
 
     // Actualizar producto.
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody ActualizarProductoDTO actualizarProductoDTO) {
+
         // Validar si existe el producto.
         if (!productoService.existById(id)) {
             return ResponseEntity.notFound().build();
@@ -89,6 +121,11 @@ public class ProductoController {
         Producto productoActualizado = productoService.save(productoActual);
         return ResponseEntity.ok(productoActualizado);
     }
+    @Operation(summary = "Eliminar un producto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Producto eliminado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    })
 
 
     // Eliminar producto.
@@ -106,6 +143,13 @@ public class ProductoController {
 
         return ResponseEntity.noContent().build(); // 204 OK
     }
+
+    @Operation(summary = "Actualizar el stock de un producto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Stock actualizado correctamente"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos"),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    })
 
 
     // Actualizar stock.
@@ -132,6 +176,7 @@ public class ProductoController {
         return ResponseEntity.ok(productoActual);
     }
 
+    @Operation(summary = "Actualizar la categoría de un producto")
 
     // Actualizar categoria de un producto.
     @PutMapping("/{id}/categoria")
@@ -161,6 +206,8 @@ public class ProductoController {
         return ResponseEntity.ok(producto);
     }
 
+    @Operation(summary = "Obtener productos disponibles")
+
 
     // Buscar productos disponibles
     @GetMapping("/disponibles")
@@ -173,6 +220,8 @@ public class ProductoController {
         return ResponseEntity.ok(lista);
     }
 
+    @Operation(summary = "Obtener productos NO disponibles")
+
 
     // Buscar productos no disponibles
     @GetMapping("/!disponibles")
@@ -184,6 +233,8 @@ public class ProductoController {
 
         return ResponseEntity.ok(lista);
     }
+
+    @Operation(summary = "Buscar y filtrar productos")
 
 
     // Buscar y filtrar productos
