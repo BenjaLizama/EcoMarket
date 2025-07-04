@@ -56,4 +56,26 @@ public class ProductoRepositoryTest {
 
     }
 
+
+    @Test
+    void testBuscarProductoPorId() {
+
+        // Crear producto
+        Producto producto = new Producto();
+        producto.setNombreProducto("Papas fritas");
+        producto.setDescripcion("Son papas nomas");
+        producto.setPrecio(3000);
+        producto.setCategoria(null);
+        productoRepository.save(producto);
+
+        // Buscar el producto segun su ID
+        Optional<Producto> productoBuscado = productoRepository.findById(producto.getIdProducto());
+
+        // Verificar que el producto existe
+        assertThat(productoBuscado).isPresent();
+        assertThat(productoBuscado.get().getNombreProducto()).isEqualTo("Papas fritas");
+
+    }
+
+
 }
