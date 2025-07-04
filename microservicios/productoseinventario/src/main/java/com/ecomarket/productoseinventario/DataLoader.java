@@ -56,7 +56,7 @@ public class DataLoader implements CommandLineRunner {
 
             nuevoproducto.setStock(nuevoStock);
 
-            nuevoproducto.setCategoria(categoriaService.findById(faker.number().numberBetween(20L,22L)).get());
+            nuevoproducto.setCategoria(categoriaService.findById(faker.number().numberBetween(20L, 22L)).orElse(null));
             productoService.save(nuevoproducto);
 
 
