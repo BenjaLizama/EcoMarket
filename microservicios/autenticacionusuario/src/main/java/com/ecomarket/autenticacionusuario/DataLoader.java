@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Profile("dev")
-@Component
+
 
 public class DataLoader implements CommandLineRunner {
         @Autowired
@@ -30,7 +30,7 @@ public class DataLoader implements CommandLineRunner {
                 nuevoUsuario.setCorreo(faker.internet().emailAddress());
                 nuevoUsuario.setClave(""+faker.number().randomDigit());
                 nuevoUsuario.setNombre(faker.name().firstName());
-                nuevoUsuario.setApellido(faker.name().lastName());
+                nuevoUsuario.setApellido(faker  .name().lastName());
                 nuevoUsuario.setDireccion(faker.university().name());
                 nuevoUsuario.setTipoCuenta(tipoCuentaService.findById(1L));
                 nuevoUsuario.setEstado(true);
