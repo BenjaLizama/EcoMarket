@@ -1,6 +1,7 @@
 package com.ecomarket.autenticacionusuario.controller;
 
 
+import com.ecomarket.autenticacionusuario.assembler.UsuarioAssembler;
 import com.ecomarket.autenticacionusuario.dto.*;
 import com.ecomarket.autenticacionusuario.model.*;
 import com.ecomarket.autenticacionusuario.service.*;
@@ -13,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
@@ -39,22 +45,31 @@ public class UsuarioController {
     private ProductoMCService productoMCService;
     @Autowired
     private CarritoMCService carritoMCService;
+    @Autowired
+    private UsuarioAssembler assembler;
 
 
-    @GetMapping
+    @GetMapping("/listar")
     @Operation(summary = "Obtener todos los usuarios.", description = "Obtiene un listado de todos los usuarios existentes.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Operacion exitosa."),
             @ApiResponse(responseCode = "204", description = "Operacion exitosa, pero sin contenido.")
     })
-    public ResponseEntity<List<Usuario>> listarusUarios() {
+    public ResponseEntity<CollectionModel<EntityModel<Usuario>>> listarUsuarios() {
         List<Usuario> usuarios = usuarioService.findAll();
 
-        if(usuarios.isEmpty()){
+        if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(usuarios);
+        List<EntityModel<Usuario>> usuariosModel = usuarios.stream()
+                .map(assembler::toModel)
+                .toList();
+
+        CollectionModel<EntityModel<Usuario>> collectionModel = CollectionModel.of(usuariosModel,
+                linkTo(methodOn(UsuarioController.class).listarUsuarios()).withSelfRel());
+
+        return ResponseEntity.ok(collectionModel);
     }
 
 
@@ -66,14 +81,18 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Usuario encontrado."),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado.")
     })
-    public ResponseEntity<Usuario> buscarUsuario(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<Usuario>> buscarUsuario(@PathVariable Long id) {
         if (!usuarioService.existById(id)) {
             return ResponseEntity.notFound().build();
         }
 
         Usuario usuario = usuarioService.findById(id);
-        return ResponseEntity.ok(usuario);
+        return ResponseEntity.ok(assembler.toModel(usuario));
+
+
+
     }
+
 
     //AGREGAR USUARIO
     @PostMapping("/agregar")
@@ -122,14 +141,20 @@ public class UsuarioController {
 
         usuarioService.save(nuevoUsuario); // Guardamos
         carritoMCService.crearCarrito(nuevoUsuario.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
+          // Convertimos a EntityModel con links HATEOAS
+        EntityModel<Usuario> usuarioModel = assembler.toModel(nuevoUsuario);
+
+        // Devolvemos 201 Created con ubicación del nuevo recurso
+        return ResponseEntity
+                .created(linkTo(methodOn(UsuarioController.class).buscarUsuario(nuevoUsuario.getId())).toUri())
+                .body(usuarioModel);
     }
 
 
 
     // BORRAR USUARIO
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<String>> eliminarUsuario(@PathVariable Long id) {
         if (!usuarioService.existById(id)) {
             return ResponseEntity.notFound().build();
         }
