@@ -47,6 +47,8 @@ public class UsuarioController {
     private CarritoMCService carritoMCService;
     @Autowired
     private UsuarioAssembler assembler;
+    @Autowired
+    private Usuario usuario;
 
 
     @GetMapping("/listar")

@@ -2,6 +2,7 @@
 package com.ecomarket.productoseinventario.controller;
 
 
+import com.ecomarket.productoseinventario.assembler.ProductoAssembler;
 import com.ecomarket.productoseinventario.dto.ActualizarCategoriaDTO;
 import com.ecomarket.productoseinventario.dto.ActualizarProductoDTO;
 import com.ecomarket.productoseinventario.dto.BuscarDTO;
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController
@@ -42,6 +47,8 @@ public class ProductoController {
     private StockService stockService;
     @Autowired
     private CategoriaService categoriaService;
+    @Autowired
+    ProductoAssembler assembler;
 
     @Operation(summary = "Listar todos los productos", description = "Retorna todos los productos registrados.")
     @ApiResponses({
@@ -83,7 +90,7 @@ public class ProductoController {
 
     // Agrega productos.
     @PostMapping("/agregar") // Solicitud Post.
-    public ResponseEntity<Producto> agregarProducto(@RequestBody Producto producto) {
+    public ResponseEntity<EntityModel<Producto>> agregarProducto(@RequestBody Producto producto) {
         Stock nuevoStock = new Stock();
         nuevoStock.setCantidad(0);
         nuevoStock.setFecha_actualizacion(LocalDateTime.now()); // Agrega la fecha actual.
@@ -93,7 +100,8 @@ public class ProductoController {
         producto.setCategoria(categoriaService.findById(1L).get());
 
         productoService.save(producto); // Guarda el nuevo producto en la base de datos.
-        return ResponseEntity.status(HttpStatus.CREATED).body(producto); // Retorna 201 (Created).
+        EntityModel<Producto> productoModel = assembler.toModel(producto);
+        return ResponseEntity.created(linkTo(methodOn(ProductoController.class).obtenerProducto(producto.getIdProducto())).toUri()).body(productoModel); // Retorna 201 (Created).
     }
 
     @Operation(summary = "Actualizar un producto existente")
@@ -105,7 +113,7 @@ public class ProductoController {
 
     // Actualizar producto.
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody ActualizarProductoDTO actualizarProductoDTO) {
+    public ResponseEntity<EntityModel<Producto>> actualizarProducto(@PathVariable Long id, @RequestBody ActualizarProductoDTO actualizarProductoDTO) {
 
         // Validar si existe el producto.
         if (!productoService.existById(id)) {
@@ -120,7 +128,8 @@ public class ProductoController {
 
         // Guardar el producto actualizado y lo devuelve.
         Producto productoActualizado = productoService.save(productoActual);
-        return ResponseEntity.ok(productoActualizado);
+
+        return ResponseEntity.ok(assembler.toModel(productoActualizado));
     }
     @Operation(summary = "Eliminar un producto")
     @ApiResponses({
