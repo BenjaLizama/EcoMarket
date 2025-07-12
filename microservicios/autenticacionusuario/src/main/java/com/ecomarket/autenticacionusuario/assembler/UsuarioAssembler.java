@@ -14,10 +14,6 @@ public class UsuarioAssembler implements RepresentationModelAssembler<Usuario, E
         return EntityModel.of(usuario,
                 linkTo(methodOn(UsuarioController.class).buscarUsuario(usuario.getId())).withSelfRel(),
 
-                linkTo(methodOn(UsuarioController.class).listarUsuarios()).withRel("listar"),
-
-                linkTo(methodOn(UsuarioController.class).buscarUsuario(usuario.getId())).withSelfRel(),
-
                 linkTo(methodOn(UsuarioController.class).eliminarUsuario(usuario.getId())).withRel("delete"),
 
                 linkTo(methodOn(UsuarioController.class).actualizarUsuario(usuario.getId(), null)).withRel("update"),
