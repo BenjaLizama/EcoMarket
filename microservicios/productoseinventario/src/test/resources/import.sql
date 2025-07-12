@@ -1,1 +1,0 @@
-INSERT INTO categoria (nombre_categoria) VALUES ('N/A');
