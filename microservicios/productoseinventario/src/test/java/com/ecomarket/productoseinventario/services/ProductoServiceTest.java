@@ -26,7 +26,7 @@ public class ProductoServiceTest {
     private CategoriaRepository categoriaRepository;
 
     @InjectMocks
-    private ProductoService productoService;
+    private ProductoService productoService; // 10.600
 
 
     @Test

@@ -43,20 +43,21 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
+
     @Autowired
     private StockService stockService;
+
     @Autowired
     private CategoriaService categoriaService;
     @Autowired
     ProductoAssembler assembler;
+
 
     @Operation(summary = "Listar todos los productos", description = "Retorna todos los productos registrados.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de productos encontrada", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Producto.class)))),
             @ApiResponse(responseCode = "204", description = "No hay productos registrados")
     })
-
-
     @GetMapping // Solicitud Get
     public ResponseEntity<List<Producto>> listar() {
         List<Producto> productos = productoService.findAll();
@@ -66,13 +67,12 @@ public class ProductoController {
         return ResponseEntity.ok(productos); // Devuelve el listado de productos encontrados.
     }
 
+
     @Operation(summary = "Obtener un producto por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Producto encontrado", content = @Content(schema = @Schema(implementation = Producto.class))),
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
-
-
     @GetMapping("/{id}") // Recibe 'id' en la ruta de la petición HTTP
     public ResponseEntity<Producto> obtenerProducto(@PathVariable Long id) {
         Producto producto = productoService.findById(id); // Busca el producto con el ID especificado.
@@ -82,13 +82,11 @@ public class ProductoController {
         return ResponseEntity.ok(producto); // Retorna 200 (OK) si encuentra el producto.
     }
 
+
     @Operation(summary = "Agregar un nuevo producto")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Producto creado correctamente", content = @Content(schema = @Schema(implementation = Producto.class)))
     })
-
-
-    // Agrega productos.
     @PostMapping("/agregar") // Solicitud Post.
     public ResponseEntity<EntityModel<Producto>> agregarProducto(@RequestBody Producto producto) {
         Stock nuevoStock = new Stock();
@@ -104,14 +102,12 @@ public class ProductoController {
         return ResponseEntity.created(linkTo(methodOn(ProductoController.class).obtenerProducto(producto.getIdProducto())).toUri()).body(productoModel); // Retorna 201 (Created).
     }
 
+
     @Operation(summary = "Actualizar un producto existente")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Producto actualizado correctamente"),
             @ApiResponse(responseCode = "404", description = "not found")
     })
-
-
-    // Actualizar producto.
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<EntityModel<Producto>> actualizarProducto(@PathVariable Long id, @RequestBody ActualizarProductoDTO actualizarProductoDTO) {
 
@@ -131,14 +127,13 @@ public class ProductoController {
 
         return ResponseEntity.ok(assembler.toModel(productoActualizado));
     }
+
+
     @Operation(summary = "Eliminar un producto")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Producto eliminado correctamente"),
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
-
-
-    // Eliminar producto.
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
         if (!productoService.existById(id)) {
@@ -154,15 +149,13 @@ public class ProductoController {
         return ResponseEntity.noContent().build(); // 204 OK
     }
 
+
     @Operation(summary = "Actualizar el stock de un producto")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Stock actualizado correctamente"),
             @ApiResponse(responseCode = "400", description = "Datos inválidos"),
             @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
-
-
-    // Actualizar stock.
     @PutMapping("/{id}/stock")
     public ResponseEntity<Object> actualizarStockProducto(@PathVariable Long id, @RequestBody StockDTO stockDTO) {
         if (!productoService.existById(id)) {
