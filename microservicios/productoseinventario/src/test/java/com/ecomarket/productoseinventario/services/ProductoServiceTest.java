@@ -22,9 +22,6 @@ public class ProductoServiceTest {
     @Mock
     private ProductoRepository productoRepository;
 
-    @Mock
-    private CategoriaRepository categoriaRepository;
-
     @InjectMocks
     private ProductoService productoService; // 10.600
 

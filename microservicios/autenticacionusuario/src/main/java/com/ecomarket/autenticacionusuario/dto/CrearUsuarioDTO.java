@@ -1,5 +1,10 @@
 package com.ecomarket.autenticacionusuario.dto;
 
+import lombok.*;
+
+@Data
+@Getter
+@Setter
 public class CrearUsuarioDTO {
 
     private String correo;
@@ -27,4 +32,6 @@ public class CrearUsuarioDTO {
     public String getDireccion() {
         return direccion;
     }
+
+
 }

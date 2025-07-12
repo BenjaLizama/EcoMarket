@@ -107,6 +107,8 @@ public class UsuarioController {
                     )
             )
     )
+
+
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Usuario creado con exito"),
         @ApiResponse(responseCode = "400", description = "Error al crar el usuario.")
