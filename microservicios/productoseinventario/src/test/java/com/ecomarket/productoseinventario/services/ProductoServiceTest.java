@@ -1,7 +1,6 @@
 package com.ecomarket.productoseinventario.services;
 
 import com.ecomarket.productoseinventario.model.Producto;
-import com.ecomarket.productoseinventario.repository.CategoriaRepository;
 import com.ecomarket.productoseinventario.repository.ProductoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

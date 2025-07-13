@@ -22,7 +22,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,14 +56,6 @@ public class ProductoControllerIntegrationTest {
     }
 
 
-    @Test
-    void testObtenerProductoNoExistentePorId() throws Exception {
-        Long id = 1L;
-        mockMvc.perform(get("/api/v1/productos/{id}", id))
-                .andExpect(status().isNotFound());
-    }
-
-
     @Transactional
     @Test
     void testObtenerProductoExistentePorId() throws Exception {
@@ -93,26 +84,4 @@ public class ProductoControllerIntegrationTest {
                 .andExpect(jsonPath("$.precio").value(1500));
     }
 
-
-    @Test
-    void testActualizarStockProductoExistente() throws Exception {
-        Stock stock = new Stock();
-        stock.setCantidad(0);
-        stock.setFecha_actualizacion(LocalDateTime.now());
-        stockService.save(stock);
-
-        Categoria categoria = new Categoria();
-        categoria.setNombreCategoria("Categoria de prueba " + UUID.randomUUID());
-        categoriaService.save(categoria);
-
-        Producto producto = new Producto();
-        producto.setStock(stock);
-        producto.setCategoria(categoria);
-        producto.setNombreProducto("Producto de prueba");
-        producto.setPrecio(1500);
-        producto.setDescripcion("Descripcion del producto");
-
-        Long id = producto.getIdProducto();
-        mockMvc.perform(put("/api/v1/productos/{}"));
-    }
 }

@@ -37,14 +37,12 @@ public class UsuarioControllerIntegrationTest {
     @BeforeEach
     void setup() {
         usuarioRepository.deleteAll();
-        tipoCuentaRepository.deleteAll(); // también borra las cuentas previas si quieres aislamiento
+        tipoCuentaRepository.deleteAll();
 
-        // Crear tipo cuenta
         TipoCuenta tipoCuenta = new TipoCuenta();
         tipoCuenta.setNombreTipoCuenta("Cuenta Rut");
-        tipoCuenta = tipoCuentaRepository.save(tipoCuenta); // persistimos primero
+        tipoCuenta = tipoCuentaRepository.save(tipoCuenta);
 
-        // Crear usuario y asociar tipoCuenta
         usuario = new Usuario();
         usuario.setCorreo("integracion@test.com");
         usuario.setNombre("Test");
@@ -52,9 +50,9 @@ public class UsuarioControllerIntegrationTest {
         usuario.setClave("1234");
         usuario.setDireccion("Dirección Test");
         usuario.setEstado(true);
-        usuario.setTipoCuenta(tipoCuenta); // <-- ASOCIACIÓN NECESARIA
+        usuario.setTipoCuenta(tipoCuenta);
 
-        usuario = usuarioRepository.save(usuario); // importante reasignar con el ID generado
+        usuario = usuarioRepository.save(usuario);
     }
 
 
